@@ -76,7 +76,8 @@
     </div>
 
     <!-- Papa Parse CDN for easy CSV parsing -->
-    <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js"></script>
+    <!-- The onload event ensures loadCsvData is called only after PapaParse is loaded -->
+    <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js" onload="loadCsvData();"></script>
     <script>
         // Function to fetch CSV data and render it as an HTML table
         async function loadCsvData() {
@@ -105,14 +106,8 @@
                 const csvText = await response.text();
                 console.log('Log 4: CSV text content fetched:', csvText.substring(0, 200) + '...'); 
 
-                // Check if PapaParse is defined before attempting to use it
-                if (typeof PapaParse === 'undefined') {
-                    console.error('Log 4.5: PapaParse is still undefined. Cannot parse CSV.'); 
-                    tableContainer.innerHTML = `<div class="error-message">Error: PapaParse library not loaded. Please check your internet connection or CDN link.</div>`;
-                    return; 
-                }
-
                 // Use Papa Parse to parse the CSV text
+                // PapaParse should now be defined due to the onload event
                 PapaParse.parse(csvText, { 
                     header: false, 
                     skipEmptyLines: true, 
@@ -181,9 +176,6 @@
                 tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data. Please check the file path and network connection.</div>`;
             }
         }
-
-        // Call the function when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', loadCsvData);
     </script>
 </body>
 </html>
