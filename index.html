@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV Data Table</title>
+    <title>CSV Data Tables</title>
     <!-- Tailwind CSS CDN for basic styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -13,10 +13,11 @@
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6; /* Light gray background */
             display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Align to top */
+            flex-direction: column; /* Arrange content vertically */
+            align-items: center;
             min-height: 100vh;
             padding: 2rem;
+            gap: 2rem; /* Space between containers */
         }
         .container {
             background-color: #ffffff;
@@ -69,9 +70,16 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">CSV Data Display</h1>
-        <div id="table-container" class="loading-message">
-            Loading data...
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">My Have List</h1>
+        <div id="have-list-container" class="loading-message">
+            Loading 'have' data...
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">My Want List</h1>
+        <div id="want-list-container" class="loading-message">
+            Loading 'want' data...
         </div>
     </div>
 
@@ -81,34 +89,39 @@
     <!-- Your custom script, placed AFTER the CDN script -->
     <script>
         // Function to fetch CSV data and render it as an HTML table
-        async function loadCsvData() {
-            const tableContainer = document.getElementById('table-container');
-            const csvFilePath = 'trade_have.csv'; 
+        // Now accepts filePath and containerId as arguments for reusability
+        async function loadCsvData(filePath, containerId, title) {
+            const tableContainer = document.getElementById(containerId);
+            if (!tableContainer) {
+                console.error(`Error: Container with ID '${containerId}' not found.`);
+                return;
+            }
 
-            console.log('Log 0: Current URL:', window.location.href); 
-            console.log('Log 1: Attempting to load CSV data from:', csvFilePath); 
+            console.log(`Log 0: Current URL: ${window.location.href}`); 
+            console.log(`Log 1: Attempting to load CSV data from: ${filePath} into container: ${containerId}`); 
 
             try {
-                // IMPORTANT DEBUGGING STEP: Explicitly construct the URL to see what fetch will use
-                const resolvedCsvUrl = new URL(csvFilePath, window.location.href).toString();
-                console.log('Log 1.5: Resolved CSV URL:', resolvedCsvUrl); 
+                const resolvedCsvUrl = new URL(filePath, window.location.href).toString();
+                console.log(`Log 1.5: Resolved CSV URL for ${filePath}: ${resolvedCsvUrl}`); 
 
-                // Fetch the CSV file
                 const response = await fetch(resolvedCsvUrl); 
-                console.log('Log 2: Fetch response received:', response); 
+                console.log(`Log 2: Fetch response received for ${filePath}:`, response); 
 
-                // Check if the fetch was successful
                 if (!response.ok) {
-                    console.error('Log 3: HTTP error! Status:', response.status, 'Status Text:', response.statusText); 
+                    console.error(`Log 3: HTTP error! Status for ${filePath}: ${response.status}, Status Text: ${response.statusText}`); 
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                // Get the text content of the CSV file
                 const csvText = await response.text();
-                console.log('Log 4: CSV text content fetched:', csvText.substring(0, 200) + '...'); 
+                console.log(`Log 4: CSV text content fetched for ${filePath}: ${csvText.substring(0, 200)}...`); 
 
                 // Use Papa Parse to parse the CSV text
-                // At this point, PapaParse should be defined because its script tag is above this one.
+                if (typeof PapaParse === 'undefined') {
+                    console.error('Log 4.5: PapaParse is undefined. Cannot parse CSV. Check CDN load.');
+                    tableContainer.innerHTML = `<div class="error-message">Error: PapaParse library not loaded. Please check your internet connection or CDN link.</div>`;
+                    return;
+                }
+
                 PapaParse.parse(csvText, { 
                     header: false, 
                     skipEmptyLines: true, 
@@ -116,30 +129,27 @@
                         const data = results.data;
                         const errors = results.errors;
 
-                        console.log('Log 5: Papa Parse results:', results); 
-                        console.log('Log 6: Parsed data:', data); 
-                        console.log('Log 7: Parsing errors:', errors); 
+                        console.log(`Log 5: Papa Parse results for ${filePath}:`, results); 
+                        console.log(`Log 6: Parsed data for ${filePath}:`, data); 
+                        console.log(`Log 7: Parsing errors for ${filePath}:`, errors); 
 
                         if (errors.length > 0) {
-                            console.error("CSV Parsing Errors:", errors);
-                            tableContainer.innerHTML = `<div class="error-message">Error parsing CSV: ${errors[0].message}</div>`;
+                            console.error(`CSV Parsing Errors for ${filePath}:`, errors);
+                            tableContainer.innerHTML = `<div class="error-message">Error parsing CSV for ${title}: ${errors[0].message}</div>`;
                             return;
                         }
 
                         if (data.length === 0) {
-                            tableContainer.innerHTML = `<div class="loading-message">No data found in CSV.</div>`;
+                            tableContainer.innerHTML = `<div class="loading-message">No data found in ${title}.</div>`;
                             return;
                         }
 
-                        // Create the table element
                         const table = document.createElement('table');
                         table.classList.add('min-w-full', 'divide-y', 'divide-gray-200', 'shadow-sm', 'rounded-lg');
 
-                        // Create table header (thead)
                         const thead = document.createElement('thead');
                         const headerRow = document.createElement('tr');
                         
-                        // Generate generic headers if no header row is present
                         const numColumns = data[0].length;
                         for (let i = 0; i < numColumns; i++) {
                             const th = document.createElement('th');
@@ -149,11 +159,9 @@
                         thead.appendChild(headerRow);
                         table.appendChild(thead);
 
-                        // Create table body (tbody)
                         const tbody = document.createElement('tbody');
                         tbody.classList.add('bg-white', 'divide-y', 'divide-gray-200');
 
-                        // Loop through the data rows
                         data.forEach(rowData => {
                             const tr = document.createElement('tr');
                             rowData.forEach(cellData => {
@@ -165,24 +173,25 @@
                         });
                         table.appendChild(tbody);
 
-                        // Clear loading message and append the table
                         tableContainer.innerHTML = '';
                         tableContainer.appendChild(table);
-                        console.log('Log 8: Table rendered successfully.'); 
+                        console.log(`Log 8: Table rendered successfully for ${filePath}.`); 
                     }
                 });
 
             } catch (error) {
-                console.error('Log 9: Error loading CSV data in catch block:', error); 
-                tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data. Please check the file path and network connection.</div>`;
+                console.error(`Log 9: Error loading CSV data in catch block for ${filePath}:`, error); 
+                tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data for ${title}. Please check the file path and network connection.</div>`;
             }
         }
 
-        // Call the function when the DOM is fully loaded
-        // This ensures all HTML and scripts (including PapaParse) are ready.
+        // Call functions when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Log DOMContentLoaded: PapaParse type:', typeof PapaParse); // NEW LOG HERE
-            loadCsvData();
+            // Load the "have" list
+            loadCsvData('trade_have.csv', 'have-list-container', 'My Have List');
+            
+            // Load the "want" list
+            loadCsvData('trade_want.csv', 'want-list-container', 'My Want List');
         });
     </script>
 </body>
