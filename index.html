@@ -86,7 +86,7 @@
 
             console.log('Attempting to load CSV data from:', csvFilePath); // Log 1
 
-            try {
+           // try {
                 // Fetch the CSV file
                 const response = await fetch(csvFilePath);
                 console.log('Fetch response received:', response); // Log 2
@@ -167,10 +167,10 @@
                     }
                 });
 
-            } catch (error) {
-                console.error('Error loading CSV data in catch block:', error); // Log 9
-                tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data. Please check the file path and network connection.</div>`;
-            }
+          //  } catch (error) {
+          //      console.error('Error loading CSV data in catch block:', error); // Log 9
+          //      tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data. Please check the file path and network connection.</div>`;
+          //  }
         }
 
         // Call the function when the DOM is fully loaded
