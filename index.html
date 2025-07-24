@@ -75,16 +75,18 @@
         </div>
     </div>
 
-    <!-- Papa Parse CDN for easy CSV parsing - switched to unpkg.com -->
+    <!-- Papa Parse CDN for easy CSV parsing -->
     <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js"></script>
     <script>
-        // NEW LOG: Check if PapaParse is defined immediately after its script tag
+        // Log 1.6: Check if PapaParse is defined immediately after its script tag
         console.log('Log 1.6: Type of PapaParse after CDN script (CDN स्क्रिप्टनंतर PapaParse चा प्रकार):', typeof PapaParse);
+        console.log('Log 1.7: Value of window.PapaParse (window.PapaParse चे मूल्य):', window.PapaParse); // New log: check global object
+        console.log('Log 1.8: Document readyState (डॉक्युमेंटची रेडीस्टेट):', document.readyState); // New log: check document readiness
 
         // Function to fetch CSV data and render it as an HTML table
         async function loadCsvData() {
             const tableContainer = document.getElementById('table-container');
-            const csvFilePath = 'trade_have.csv'; // Updated CSV file path - removed the leading underscore
+            const csvFilePath = 'trade_have.csv'; 
 
             console.log('Log 0: Current URL (सध्याची URL):', window.location.href); 
             console.log('Log 1: Attempting to load CSV data from (CSV डेटा लोड करण्याचा प्रयत्न करत आहे):', csvFilePath); 
@@ -110,9 +112,9 @@
 
                 // Check if PapaParse is defined before attempting to use it
                 if (typeof PapaParse === 'undefined') {
-                    console.error('Log 4.5: PapaParse is still undefined. Cannot parse CSV.'); // New error log
+                    console.error('Log 4.5: PapaParse is still undefined. Cannot parse CSV.'); 
                     tableContainer.innerHTML = `<div class="error-message">Error: PapaParse library not loaded. Please check your internet connection or CDN link.</div>`;
-                    return; // Stop execution if PapaParse is not available
+                    return; 
                 }
 
                 // Use Papa Parse to parse the CSV text
