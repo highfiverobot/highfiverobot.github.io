@@ -11,33 +11,33 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Halka grey background */
+            background-color: #f3f4f6; /* Light gray background */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Varun align kara */
+            align-items: flex-start; /* Align to top */
             min-height: 100vh;
             padding: 2rem;
         }
         .container {
             background-color: #ffffff;
             padding: 2.5rem;
-            border-radius: 1rem; /* Gol kinare */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Halaki shadow */
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Subtle shadow */
             width: 100%;
-            max-width: 960px; /* Vachanasaathi sarvottam lambi */
-            overflow-x: auto; /* Lamb tables saathi horizontal scrolling saksham kara */
+            max-width: 960px; /* Max width for readability */
+            overflow-x: auto; /* Enable horizontal scrolling for wide tables */
         }
         table {
             width: 100%;
-            border-collapse: separate; /* Cell var border-radius la anumati dete */
+            border-collapse: separate; /* Allows border-radius on cells */
             border-spacing: 0;
-            border-radius: 0.5rem; /* Table saathi gol kinare */
-            overflow: hidden; /* Content border-radius cha adhar kare he sunishchit karte */
+            border-radius: 0.5rem; /* Rounded corners for the table */
+            overflow: hidden; /* Ensures content respects border-radius */
         }
         th, td {
             padding: 1rem 1.5rem;
             text-align: left;
-            border-bottom: 1px solid #e5e7eb; /* Halka grey border */
+            border-bottom: 1px solid #e5e7eb; /* Light gray border */
         }
         th {
             background-color: #4f46e5; /* Indigo 600 */
@@ -45,24 +45,24 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            font-size: 0.875rem; /* lahan text */
+            font-size: 0.875rem; /* sm text */
         }
         tr:last-child td {
-            border-bottom: none; /* Shevatachya row saathi border nahi */
+            border-bottom: none; /* No border for the last row */
         }
         tbody tr:hover {
-            background-color: #eff6ff; /* Hover var halka blue */
+            background-color: #eff6ff; /* Light blue on hover */
         }
         .loading-message {
             text-align: center;
             padding: 2rem;
-            font-size: 1.125rem; /* motha text */
-            color: #6b7280; /* Grey 500 */
+            font-size: 1.125rem; /* lg text */
+            color: #6b7280; /* Gray 500 */
         }
         .error-message {
             text-align: center;
             padding: 2rem;
-            font-size: 1.125rem; /* motha text */
+            font-size: 1.125rem; /* lg text */
             color: #ef4444; /* Red 500 */
         }
     </style>
@@ -80,33 +80,27 @@
 
     <script>
         // Function to fetch CSV data and render it as an HTML table
-        // CSV data fetch karun HTML table madhye render karnyache function
         async function loadCsvData() {
             const tableContainer = document.getElementById('table-container');
-            // CSV file cha path. Sadha relative path vaparla ahe, jo GitHub Pages var vyavasthit chalel.
             // CSV file path. A simple relative path is used, which will work correctly on GitHub Pages.
             const csvFilePath = 'data.csv'; 
 
             try {
-                // CSV file fetch kara
-                // CSV file aanun ghya
+                // Fetch the CSV file
                 const response = await fetch(csvFilePath);
 
-                // Fetch यशस्वी jhala ka te tapasun ghya
-                // Fetch यशस्वी झाला का ते तपासून घ्या
+                // Check if the fetch was successful
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                // CSV file chi text content ghya
-                // CSV फाइलमधील मजकूर मिळवा
+                // Get the text content of the CSV file
                 const csvText = await response.text();
 
-                // Papa Parse vaprun CSV text parse kara
-                // Papa Parse वापरून CSV मजकूर पार्स करा
+                // Use Papa Parse to parse the CSV text
                 PapaParse.parse(csvText, {
-                    header: true, // Pahili row headers mhanun vapra
-                    skipEmptyLines: true, // Rikamya rows ignore kara
+                    header: false, // Set to false because the CSV does not have a header row
+                    skipEmptyLines: true, // Ignore empty rows
                     complete: function(results) {
                         const data = results.data;
                         const errors = results.errors;
@@ -122,47 +116,43 @@
                             return;
                         }
 
-                        // Table element create kara
-                        // टेबल घटक तयार करा
+                        // Create the table element
                         const table = document.createElement('table');
                         table.classList.add('min-w-full', 'divide-y', 'divide-gray-200', 'shadow-sm', 'rounded-lg');
 
-                        // Table header (thead) create kara
-                        // टेबल शीर्षलेख (thead) तयार करा
+                        // Create table header (thead)
                         const thead = document.createElement('thead');
                         const headerRow = document.createElement('tr');
-                        // Papa Parse pasun column headers madhun loop kara
-                        // Papa Parse मधून स्तंभ शीर्षलेखांमधून लूप करा
-                        results.meta.fields.forEach(field => {
+                        
+                        // Generate generic headers if no header row is present
+                        // Get the number of columns from the first data row
+                        const numColumns = data[0].length;
+                        for (let i = 0; i < numColumns; i++) {
                             const th = document.createElement('th');
-                            th.textContent = field;
+                            th.textContent = `Column ${i + 1}`; // e.g., Column 1, Column 2
                             headerRow.appendChild(th);
-                        });
+                        }
                         thead.appendChild(headerRow);
                         table.appendChild(thead);
 
-                        // Table body (tbody) create kara
-                        // टेबल बॉडी (tbody) तयार करा
+                        // Create table body (tbody)
                         const tbody = document.createElement('tbody');
                         tbody.classList.add('bg-white', 'divide-y', 'divide-gray-200');
 
-                        // Data rows madhun loop kara
-                        // डेटा पंक्तींमधून लूप करा
+                        // Loop through the data rows
                         data.forEach(rowData => {
                             const tr = document.createElement('tr');
-                            // Each row saathi values madhun loop kara (order sunishchit karnyasaathi meta madhun fields vaprun)
-                            // प्रत्येक पंक्तीसाठी मूल्यांमधून लूप करा (क्रम सुनिश्चित करण्यासाठी मेटा मधील फील्ड वापरून)
-                            results.meta.fields.forEach(field => {
+                            // Loop through the values for each row (rowData is now an array)
+                            rowData.forEach(cellData => {
                                 const td = document.createElement('td');
-                                td.textContent = rowData[field] || ''; // Undefined values vyavasthit handle karnyasaathi || '' vapra
+                                td.textContent = cellData || ''; // Use || '' to handle undefined values gracefully
                                 tr.appendChild(td);
                             });
                             tbody.appendChild(tr);
                         });
                         table.appendChild(tbody);
 
-                        // Loading message clear kara ani table jodun ghya
-                        // लोडिंग संदेश साफ करा आणि टेबल जोडा
+                        // Clear loading message and append the table
                         tableContainer.innerHTML = '';
                         tableContainer.appendChild(table);
                     }
@@ -174,8 +164,7 @@
             }
         }
 
-        // DOM purn load jhalyavar function call kara
-        // DOM पूर्ण लोड झाल्यावर फंक्शन कॉल करा
+        // Call the function when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', loadCsvData);
     </script>
 </body>
