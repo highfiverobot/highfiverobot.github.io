@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <!-- Papa Parse CDN for easy CSV parsing - reverted to cdnjs.cloudflare.com -->
+    <!-- Papa Parse CDN for easy CSV parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     
     <!-- Your custom script, placed AFTER the CDN script -->
@@ -180,7 +180,10 @@
 
         // Call the function when the DOM is fully loaded
         // This ensures all HTML and scripts (including PapaParse) are ready.
-        document.addEventListener('DOMContentLoaded', loadCsvData);
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Log DOMContentLoaded: PapaParse type:', typeof PapaParse); // NEW LOG HERE
+            loadCsvData();
+        });
     </script>
 </body>
 </html>
