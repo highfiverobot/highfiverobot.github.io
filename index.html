@@ -75,8 +75,8 @@
         </div>
     </div>
 
-    <!-- Papa Parse CDN for easy CSV parsing and custom script combined -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- Papa Parse CDN for easy CSV parsing - switched to unpkg.com -->
+    <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js"></script>
     <script>
         // NEW LOG: Check if PapaParse is defined immediately after its script tag
         console.log('Log 1.6: Type of PapaParse after CDN script (CDN स्क्रिप्टनंतर PapaParse चा प्रकार):', typeof PapaParse);
@@ -107,6 +107,13 @@
                 // Get the text content of the CSV file
                 const csvText = await response.text();
                 console.log('Log 4: CSV text content fetched (CSV मजकूर सामग्री आणली):', csvText.substring(0, 200) + '...'); 
+
+                // Check if PapaParse is defined before attempting to use it
+                if (typeof PapaParse === 'undefined') {
+                    console.error('Log 4.5: PapaParse is still undefined. Cannot parse CSV.'); // New error log
+                    tableContainer.innerHTML = `<div class="error-message">Error: PapaParse library not loaded. Please check your internet connection or CDN link.</div>`;
+                    return; // Stop execution if PapaParse is not available
+                }
 
                 // Use Papa Parse to parse the CSV text
                 PapaParse.parse(csvText, { 
