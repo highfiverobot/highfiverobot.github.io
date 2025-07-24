@@ -82,20 +82,24 @@
         // Function to fetch CSV data and render it as an HTML table
         async function loadCsvData() {
             const tableContainer = document.getElementById('table-container');
-            // CSV file path. A simple relative path is used, which will work correctly on GitHub Pages.
-            const csvFilePath = '_trade_have.csv'; 
+            const csvFilePath = '_trade_have.csv'; // Updated CSV file path
+
+            console.log('Attempting to load CSV data from:', csvFilePath); // Log 1
 
             try {
                 // Fetch the CSV file
                 const response = await fetch(csvFilePath);
+                console.log('Fetch response received:', response); // Log 2
 
                 // Check if the fetch was successful
                 if (!response.ok) {
+                    console.error('HTTP error! Status:', response.status, 'Status Text:', response.statusText); // Log 3
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 // Get the text content of the CSV file
                 const csvText = await response.text();
+                console.log('CSV text content fetched:', csvText.substring(0, 200) + '...'); // Log 4 (first 200 chars)
 
                 // Use Papa Parse to parse the CSV text
                 PapaParse.parse(csvText, {
@@ -104,6 +108,10 @@
                     complete: function(results) {
                         const data = results.data;
                         const errors = results.errors;
+
+                        console.log('Papa Parse results:', results); // Log 5
+                        console.log('Parsed data:', data); // Log 6
+                        console.log('Parsing errors:', errors); // Log 7
 
                         if (errors.length > 0) {
                             console.error("CSV Parsing Errors:", errors);
@@ -155,11 +163,12 @@
                         // Clear loading message and append the table
                         tableContainer.innerHTML = '';
                         tableContainer.appendChild(table);
+                        console.log('Table rendered successfully.'); // Log 8
                     }
                 });
 
             } catch (error) {
-                console.error('Error loading CSV data:', error);
+                console.error('Error loading CSV data in catch block:', error); // Log 9
                 tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data. Please check the file path and network connection.</div>`;
             }
         }
