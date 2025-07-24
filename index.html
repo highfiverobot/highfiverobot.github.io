@@ -75,11 +75,12 @@
         </div>
     </div>
 
-    <!-- Papa Parse CDN for easy CSV parsing and custom script combined -->
+    <!-- Papa Parse CDN for easy CSV parsing -->
     <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js"></script>
+    
+    <!-- Your custom script, placed AFTER the CDN script -->
     <script>
         // Function to fetch CSV data and render it as an HTML table
-        // This function is now defined BEFORE it's called by the onload event on the PapaParse script.
         async function loadCsvData() {
             const tableContainer = document.getElementById('table-container');
             const csvFilePath = 'trade_have.csv'; 
@@ -107,7 +108,7 @@
                 console.log('Log 4: CSV text content fetched:', csvText.substring(0, 200) + '...'); 
 
                 // Use Papa Parse to parse the CSV text
-                // PapaParse should now be defined at this point
+                // At this point, PapaParse should be defined because its script tag is above this one.
                 PapaParse.parse(csvText, { 
                     header: false, 
                     skipEmptyLines: true, 
@@ -176,8 +177,10 @@
                 tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data. Please check the file path and network connection.</div>`;
             }
         }
+
+        // Call the function when the DOM is fully loaded
+        // This ensures all HTML and scripts (including PapaParse) are ready.
+        document.addEventListener('DOMContentLoaded', loadCsvData);
     </script>
-    <!-- The onload event for PapaParse is now here, after loadCsvData is defined -->
-    <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js" onload="loadCsvData();"></script>
 </body>
 </html>
