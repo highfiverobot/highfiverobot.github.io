@@ -77,6 +77,10 @@
 
     <!-- Papa Parse CDN for easy CSV parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        // NEW LOG: Check if PapaParse is defined immediately after its script tag
+        console.log('Log 1.6: Type of PapaParse after CDN script (CDN स्क्रिप्टनंतर PapaParse चा प्रकार):', typeof PapaParse);
+    </script>
 
     <script>
         // Function to fetch CSV data and render it as an HTML table
@@ -107,7 +111,7 @@
                 console.log('Log 4: CSV text content fetched (CSV मजकूर सामग्री आणली):', csvText.substring(0, 200) + '...'); 
 
                 // Use Papa Parse to parse the CSV text
-                PapaParse.parse(csvText, {
+                PapaParse.parse(csvText, { // This is line 110 in the current Canvas code
                     header: false, 
                     skipEmptyLines: true, 
                     complete: function(results) {
