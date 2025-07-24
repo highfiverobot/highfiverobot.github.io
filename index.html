@@ -82,39 +82,45 @@
         // Function to fetch CSV data and render it as an HTML table
         async function loadCsvData() {
             const tableContainer = document.getElementById('table-container');
-            const csvFilePath = '_trade_have.csv'; // Updated CSV file path
+            const csvFilePath = '_trade_have.csv'; 
 
-            console.log('Attempting to load CSV data from:', csvFilePath); // Log 1
+            console.log('Log 0: Current URL (सध्याची URL):', window.location.href); 
+            console.log('Log 1: Attempting to load CSV data from (CSV डेटा लोड करण्याचा प्रयत्न करत आहे):', csvFilePath); 
 
             try {
+                // IMPORTANT DEBUGGING STEP: Explicitly construct the URL to see what fetch will use
+                // महत्वाचा डीबगिंग टप्पा: फेट्च काय URL वापरेल हे पाहण्यासाठी ती स्पष्टपणे तयार करा
+                const resolvedCsvUrl = new URL(csvFilePath, window.location.href).toString();
+                console.log('Log 1.5: Resolved CSV URL (रिझॉल्व्ह केलेली CSV URL):', resolvedCsvUrl); // New Log
+
                 // Fetch the CSV file
-                const response = await fetch(csvFilePath);
-                console.log('Fetch response received:', response); // Log 2
+                const response = await fetch(resolvedCsvUrl); // Use the resolved URL here
+                console.log('Log 2: Fetch response received (फेट्च प्रतिसाद प्राप्त झाला):', response); 
 
                 // Check if the fetch was successful
                 if (!response.ok) {
-                    console.error('HTTP error! Status:', response.status, 'Status Text:', response.statusText); // Log 3
+                    console.error('Log 3: HTTP error! Status (HTTP एरर! स्थिती):', response.status, 'Status Text (स्थिती मजकूर):', response.statusText); 
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 // Get the text content of the CSV file
                 const csvText = await response.text();
-                console.log('CSV text content fetched:', csvText.substring(0, 200) + '...'); // Log 4 (first 200 chars)
+                console.log('Log 4: CSV text content fetched (CSV मजकूर सामग्री आणली):', csvText.substring(0, 200) + '...'); 
 
                 // Use Papa Parse to parse the CSV text
                 PapaParse.parse(csvText, {
-                    header: false, // Set to false because the CSV does not have a header row
-                    skipEmptyLines: true, // Ignore empty rows
+                    header: false, 
+                    skipEmptyLines: true, 
                     complete: function(results) {
                         const data = results.data;
                         const errors = results.errors;
 
-                        console.log('Papa Parse results:', results); // Log 5
-                        console.log('Parsed data:', data); // Log 6
-                        console.log('Parsing errors:', errors); // Log 7
+                        console.log('Log 5: Papa Parse results (पापा पार्स परिणाम):', results); 
+                        console.log('Log 6: Parsed data (पार्स केलेला डेटा):', data); 
+                        console.log('Log 7: Parsing errors (पार्सिंग त्रुटी):', errors); 
 
                         if (errors.length > 0) {
-                            console.error("CSV Parsing Errors:", errors);
+                            console.error("CSV Parsing Errors (CSV पार्सिंग त्रुटी):", errors);
                             tableContainer.innerHTML = `<div class="error-message">Error parsing CSV: ${errors[0].message}</div>`;
                             return;
                         }
@@ -133,11 +139,10 @@
                         const headerRow = document.createElement('tr');
                         
                         // Generate generic headers if no header row is present
-                        // Get the number of columns from the first data row
                         const numColumns = data[0].length;
                         for (let i = 0; i < numColumns; i++) {
                             const th = document.createElement('th');
-                            th.textContent = `Column ${i + 1}`; // e.g., Column 1, Column 2
+                            th.textContent = `Column ${i + 1}`; 
                             headerRow.appendChild(th);
                         }
                         thead.appendChild(headerRow);
@@ -150,10 +155,9 @@
                         // Loop through the data rows
                         data.forEach(rowData => {
                             const tr = document.createElement('tr');
-                            // Loop through the values for each row (rowData is now an array)
                             rowData.forEach(cellData => {
                                 const td = document.createElement('td');
-                                td.textContent = cellData || ''; // Use || '' to handle undefined values gracefully
+                                td.textContent = cellData || ''; 
                                 tr.appendChild(td);
                             });
                             tbody.appendChild(tr);
@@ -163,12 +167,12 @@
                         // Clear loading message and append the table
                         tableContainer.innerHTML = '';
                         tableContainer.appendChild(table);
-                        console.log('Table rendered successfully.'); // Log 8
+                        console.log('Log 8: Table rendered successfully (टेबल यशस्वीरित्या रेंडर झाले).'); 
                     }
                 });
 
             } catch (error) {
-                console.error('Error loading CSV data in catch block:', error); // Log 9
+                console.error('Log 9: Error loading CSV data in catch block (कॅच ब्लॉकमध्ये CSV डेटा लोड करताना त्रुटी):', error); 
                 tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data. Please check the file path and network connection.</div>`;
             }
         }
