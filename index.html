@@ -82,19 +82,18 @@
         // Function to fetch CSV data and render it as an HTML table
         async function loadCsvData() {
             const tableContainer = document.getElementById('table-container');
-            const csvFilePath = '_trade_have.csv'; 
+            const csvFilePath = 'trade_have.csv'; // Updated CSV file path - removed the leading underscore
 
             console.log('Log 0: Current URL (सध्याची URL):', window.location.href); 
             console.log('Log 1: Attempting to load CSV data from (CSV डेटा लोड करण्याचा प्रयत्न करत आहे):', csvFilePath); 
 
             try {
                 // IMPORTANT DEBUGGING STEP: Explicitly construct the URL to see what fetch will use
-                // महत्वाचा डीबगिंग टप्पा: फेट्च काय URL वापरेल हे पाहण्यासाठी ती स्पष्टपणे तयार करा
                 const resolvedCsvUrl = new URL(csvFilePath, window.location.href).toString();
-                console.log('Log 1.5: Resolved CSV URL (रिझॉल्व्ह केलेली CSV URL):', resolvedCsvUrl); // New Log
+                console.log('Log 1.5: Resolved CSV URL (रिझॉल्व्ह केलेली CSV URL):', resolvedCsvUrl); 
 
                 // Fetch the CSV file
-                const response = await fetch(resolvedCsvUrl); // Use the resolved URL here
+                const response = await fetch(resolvedCsvUrl); 
                 console.log('Log 2: Fetch response received (फेट्च प्रतिसाद प्राप्त झाला):', response); 
 
                 // Check if the fetch was successful
