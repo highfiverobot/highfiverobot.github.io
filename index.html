@@ -127,18 +127,18 @@
             color: #333;
         }
 
-        /* --- Styles for Friends Section --- */
-        .friend-item {
+        /* --- UPDATED: Generic Styles for Copyable List Sections --- */
+        .copy-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
         }
-        .friend-item:last-child {
+        .copy-item:last-child {
             border-bottom: none;
         }
-        .friend-title {
+        .copy-title {
             margin: 0;
             font-size: 16px;
             text-align: left;
@@ -213,9 +213,12 @@
 
         <!-- Right Column -->
         <div id="right-column" class="column">
+            <!-- UPDATED: Search Strings Section -->
             <div class="container">
                 <h2>search strings</h2>
-                <p>test</p>
+                <div id="search-strings-list">
+                    <!-- Search string items will be dynamically inserted here -->
+                </div>
             </div>
         </div>
 
@@ -271,7 +274,7 @@
             loadDataForGrid(gridElement, fileName);
         }
 
-        // --- Set up all four sections ---
+        // --- Set up all four sections in the Left Column ---
         const sections = [
             { titleId: 'title-want', gridId: 'grid-want', fileName: 'trade_want.txt' },
             { titleId: 'title-have1', gridId: 'grid-have1', fileName: 'trade_have1.txt' },
@@ -280,26 +283,38 @@
         ];
         sections.forEach(section => setupCollapsibleSection(section.titleId, section.gridId, section.fileName));
 
-        // --- Code for Friends Section ---
+        // --- UPDATED: Reusable function to populate a list with copyable items ---
+        function populateCopyableList(container, data) {
+             data.forEach(item => {
+                const copyItem = document.createElement('div');
+                // Use the generic class name
+                copyItem.className = 'copy-item';
+                copyItem.innerHTML = `
+                    <p class="copy-title">${item.title}</p>
+                    <button class="copy-btn" data-copy-value="${item.value}">Copy</button>
+                `;
+                container.appendChild(copyItem);
+            });
+        }
+
+        // --- Code for Friends Section (Center Column) ---
         const friendsData = [
             { title: "all", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun,Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" },
             { title: "send", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun" },
             { title: "open", value: "Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" }
         ];
+        populateCopyableList(document.getElementById('friends-list'), friendsData);
 
-        const friendsListContainer = document.getElementById('friends-list');
+        // --- NEW: Code for Search Strings Section (Right Column) ---
+        const searchStringsData = [
+            { title: "test", value: "beebeebee" }
+        ];
+        populateCopyableList(document.getElementById('search-strings-list'), searchStringsData);
 
-        friendsData.forEach(friend => {
-            const friendItem = document.createElement('div');
-            friendItem.className = 'friend-item';
-            friendItem.innerHTML = `
-                <p class="friend-title">${friend.title}</p>
-                <button class="copy-btn" data-copy-value="${friend.value}">Copy</button>
-            `;
-            friendsListContainer.appendChild(friendItem);
-        });
 
-        friendsListContainer.addEventListener('click', (event) => {
+        // --- UPDATED: Single, delegated event listener for all copy buttons ---
+        document.getElementById('main-layout').addEventListener('click', (event) => {
+            // Check if a copy button was clicked
             if (event.target.classList.contains('copy-btn')) {
                 const button = event.target;
                 const valueToCopy = button.dataset.copyValue;
