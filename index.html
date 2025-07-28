@@ -18,6 +18,17 @@
         #status {
             font-weight: bold;
             color: gray;
+            margin-bottom: 30px; /* Added more space */
+        }
+        #myButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #buttonResult {
+            margin-top: 20px;
+            font-size: 18px;
+            color: blue;
         }
     </style>
 </head>
@@ -25,19 +36,28 @@
     <h1 id="message">Loading...</h1>
     <p id="status">JavaScript Status: Not yet run</p>
 
+    <button id="myButton">Click Me!</button>
+    <p id="buttonResult"></p>
+
     <script>
-        // This is where your JavaScript code goes.
-
-        // 1. Change the text of the H1 element
+        // --- This part confirms the page loaded JS correctly ---
         document.getElementById('message').textContent = "Hello from JavaScript!";
-
-        // 2. Change the text of the P element to confirm JS ran
         document.getElementById('status').textContent = "JavaScript Status: Successfully Executed!";
-        document.getElementById('status').style.color = "green"; // Make it green for clarity
-
-        // 3. Log a message to the browser's console (most reliable verification)
+        document.getElementById('status').style.color = "green";
         console.log("🥳 JavaScript successfully ran on GitHub Pages!");
-        console.log("You can see this message in your browser's Developer Console (F12 or Ctrl+Shift+I).");
+        
+        // --- NEW: Code to make the button interactive ---
+
+        // 1. Get references to the new HTML elements
+        const myButton = document.getElementById('myButton');
+        const buttonResult = document.getElementById('buttonResult');
+
+        // 2. Add an "event listener" that waits for a click
+        myButton.addEventListener('click', () => {
+            // This code runs ONLY when the button is clicked
+            const currentTime = new Date().toLocaleTimeString();
+            buttonResult.textContent = `🎉 The button was clicked at ${currentTime}.`;
+        });
 
     </script>
 </body>
