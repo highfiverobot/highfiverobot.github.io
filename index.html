@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Page with Fetched Data Grid</title>
+    <title>JS Page with Multiple Grids</title>
     <style>
         /* Basic styling for the page */
         body {
@@ -25,6 +25,9 @@
             margin-bottom: 2rem;
             width: 90%;
             max-width: 800px;
+        }
+        .data-section {
+             margin-bottom: 0; /* Remove bottom margin if it's the only one */
         }
         #message {
             font-size: 24px;
@@ -60,34 +63,44 @@
             min-height: 25px; /* Reserve space to prevent layout shift */
         }
 
-        /* --- Styles for the Data Grid --- */
-        #grid-container {
+        /* --- UPDATED: Styles now use classes to apply to multiple sections --- */
+        .grid-title {
+            cursor: pointer;
+            user-select: none; /* Prevents text selection on click */
+            display: inline-block;
+            position: relative;
+        }
+        .grid-title::after {
+            content: '▼'; /* Down arrow for collapsed state */
+            font-size: 0.7em;
+            margin-left: 8px;
+            position: absolute;
+            top: 5px;
+        }
+        .grid-title.expanded::after {
+            content: '▲'; /* Up arrow for expanded state */
+        }
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
-            gap: 12px;
+            gap: 10px 15px; /* row-gap column-gap */
             margin-top: 20px;
         }
+        .grid-container.collapsed {
+            display: none;
+        }
         .grid-item {
-            background-color: #e9ecef;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            padding: 15px 10px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 40px;
-        }
-        .grid-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+            min-height: 20px;
+            padding: 5px;
         }
         .grid-item h3 {
             margin: 0;
             font-size: 14px;
-            font-weight: 500;
-            color: #495057;
+            font-weight: 400;
+            color: #333;
         }
     </style>
 </head>
@@ -100,12 +113,35 @@
         <p id="buttonResult"></p>
     </div>
 
-    <div class="container">
-        <h2>Data Grid from File</h2>
-        <div id="grid-container">
-            <p>Loading project data...</p>
+    <!-- UPDATED: Four separate data sections -->
+    <div class="container data-section">
+        <h2 id="title-want" class="grid-title">wanted - all shiny</h2>
+        <div id="grid-want" class="grid-container collapsed">
+            <p>Loading...</p>
         </div>
     </div>
+
+    <div class="container data-section">
+        <h2 id="title-have1" class="grid-title">for trade - ez - all shiny</h2>
+        <div id="grid-have1" class="grid-container collapsed">
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <div class="container data-section">
+        <h2 id="title-have2" class="grid-title">for trade - med - all shiny</h2>
+        <div id="grid-have2" class="grid-container collapsed">
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <div class="container data-section">
+        <h2 id="title-have3" class="grid-title">for trade - hard - all shiny</h2>
+        <div id="grid-have3" class="grid-container collapsed">
+            <p>Loading...</p>
+        </div>
+    </div>
+
 
     <script>
         // --- This part runs on page load to confirm JS is working ---
@@ -113,7 +149,6 @@
         document.getElementById('status').textContent = "JavaScript Status: Successfully Executed!";
         document.getElementById('status').style.color = "#28a745";
         console.log("🥳 JavaScript successfully ran on GitHub Pages!");
-
         
         // --- Code to make the button interactive ---
         const myButton = document.getElementById('myButton');
@@ -123,51 +158,65 @@
             buttonResult.textContent = `🎉 Button clicked at ${currentTime}.`;
         });
 
-
-        // --- NEW: Code to create a grid by fetching data from an external file ---
-
-        // We wrap the logic in an async function to use 'await' for the fetch call.
-        async function loadProjectsFromFile() {
-            const gridContainer = document.getElementById('grid-container');
+        // --- UPDATED: Reusable function to load data into a grid ---
+        async function loadDataForGrid(gridContainer, fileName) {
             try {
-                // 1. Fetch the content of the projects.txt file.
-                // This assumes 'projects.txt' is in the same directory as your HTML file.
-                const response = await fetch('projects.txt');
-                
-                // Check if the request was successful (e.g., not a 404 Not Found error)
+                const response = await fetch(fileName);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+                const textData = await response.text();
+                const items = textData.trim().split('\n');
+                
+                gridContainer.innerHTML = ''; // Clear the "Loading..." message
 
-                // 2. Get the text content from the response.
-                const projectListString = await response.text();
-
-                // 3. Parse the string into an array of words.
-                const projectData = projectListString.trim().split(/\s+/);
-
-                // Clear the "Loading..." message from the container
-                gridContainer.innerHTML = '';
-
-                // 4. Loop through the data and create an element for each item.
-                projectData.forEach(itemTitle => {
-                    // Ensure we don't create items for empty lines from the text file
-                    if (itemTitle) { 
+                items.forEach(itemText => {
+                    if (itemText) { // Avoid creating empty items
                         const gridItem = document.createElement('div');
                         gridItem.classList.add('grid-item');
-                        gridItem.innerHTML = `<h3>${itemTitle}</h3>`;
+                        gridItem.innerHTML = `<h3>${itemText}</h3>`;
                         gridContainer.appendChild(gridItem);
                     }
                 });
-
             } catch (error) {
-                // If the file can't be loaded, display an error message in the grid.
-                console.error('Error loading projects.txt:', error);
-                gridContainer.innerHTML = `<p style="color: red; text-align: center;">Could not load project data. Make sure 'projects.txt' exists.</p>`;
+                console.error(`Error loading data from ${fileName}:`, error);
+                gridContainer.innerHTML = `<p style="color: red;">Could not load data from ${fileName}.</p>`;
             }
         }
 
-        // Call the function to start the data fetching process.
-        loadProjectsFromFile();
+        // --- UPDATED: Function to set up a single collapsible section ---
+        function setupCollapsibleSection(titleId, gridId, fileName) {
+            const titleElement = document.getElementById(titleId);
+            const gridElement = document.getElementById(gridId);
+
+            if (!titleElement || !gridElement) {
+                console.error("Could not find elements for section:", titleId);
+                return;
+            }
+
+            // Set up the click listener for collapsing
+            titleElement.addEventListener('click', () => {
+                gridElement.classList.toggle('collapsed');
+                titleElement.classList.toggle('expanded');
+            });
+
+            // Load the data for this section
+            loadDataForGrid(gridElement, fileName);
+        }
+
+        // --- UPDATED: Set up all four sections ---
+        // I corrected what looked like a typo from '_trade_have12txt' to '_trade_have2.txt' for consistency.
+        const sections = [
+            { titleId: 'title-want', gridId: 'grid-want', fileName: '_trade_want.txt' },
+            { titleId: 'title-have1', gridId: 'grid-have1', fileName: '_trade_have1.txt' },
+            { titleId: 'title-have2', gridId: 'grid-have2', fileName: '_trade_have2.txt' },
+            { titleId: 'title-have3', gridId: 'grid-have3', fileName: '_trade_have3.txt' }
+        ];
+
+        // Initialize each section
+        sections.forEach(section => {
+            setupCollapsibleSection(section.titleId, section.gridId, section.fileName);
+        });
 
     </script>
 </body>
