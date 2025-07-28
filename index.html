@@ -14,7 +14,7 @@
             padding: 20px;
         }
 
-        /* --- NEW: 3-Column Layout --- */
+        /* --- 3-Column Layout --- */
         #main-layout {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -39,9 +39,9 @@
             margin-bottom: 2rem;
             width: 100%;
             box-sizing: border-box; /* Ensures padding doesn't affect width */
+            text-align: center;
         }
 
-        /* Remove bottom margin from the last container in a column */
         .column > .container:last-child {
             margin-bottom: 0;
         }
@@ -93,7 +93,6 @@
             user-select: none;
             display: inline-block;
             position: relative;
-            text-align: center;
         }
         .grid-title::after {
             content: '▼';
@@ -120,7 +119,6 @@
             align-items: center;
             min-height: 20px;
             padding: 5px;
-            text-align: center;
         }
         .grid-item h3 {
             margin: 0;
@@ -128,37 +126,66 @@
             font-weight: 400;
             color: #333;
         }
+
+        /* --- Styles for Friends Section --- */
+        .friend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .friend-item:last-child {
+            border-bottom: none;
+        }
+        .friend-title {
+            margin: 0;
+            font-size: 16px;
+            text-align: left;
+        }
+        .copy-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            white-space: nowrap; /* Prevents button text from wrapping */
+        }
+        .copy-btn:hover {
+            background-color: #5a6268;
+        }
+        .copy-btn.copied {
+            background-color: #28a745; /* Green color for success */
+        }
     </style>
 </head>
 <body>
 
-    <!-- NEW: Main layout container -->
     <main id="main-layout">
 
-        <!-- NEW: Left Column -->
+        <!-- Left Column -->
         <div id="left-column" class="column">
-            <!-- The four data sections are now inside this column -->
             <div class="container data-section">
                 <h2 id="title-want" class="grid-title">wanted - all shiny</h2>
                 <div id="grid-want" class="grid-container collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
-        
             <div class="container data-section">
                 <h2 id="title-have1" class="grid-title">for trade - ez - all shiny</h2>
                 <div id="grid-have1" class="grid-container collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
-        
             <div class="container data-section">
                 <h2 id="title-have2" class="grid-title">for trade - med - all shiny</h2>
                 <div id="grid-have2" class="grid-container collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
-        
             <div class="container data-section">
                 <h2 id="title-have3" class="grid-title">for trade - hard - all shiny</h2>
                 <div id="grid-have3" class="grid-container collapsed">
@@ -167,7 +194,7 @@
             </div>
         </div>
 
-        <!-- NEW: Center Column -->
+        <!-- Center Column -->
         <div id="center-column" class="column">
             <div class="container">
                 <h1 id="message">Loading...</h1>
@@ -175,11 +202,18 @@
                 <button id="myButton">Click Me!</button>
                 <p id="buttonResult"></p>
             </div>
+            
+            <!-- Friends Section -->
+            <div class="container">
+                <h2>friends</h2>
+                <div id="friends-list">
+                    <!-- Friend items will be dynamically inserted here -->
+                </div>
+            </div>
         </div>
 
-        <!-- NEW: Right Column (currently empty) -->
+        <!-- Right Column (currently empty) -->
         <div id="right-column" class="column">
-            <!-- You can add content here later -->
         </div>
 
     </main>
@@ -204,14 +238,10 @@
         async function loadDataForGrid(gridContainer, fileName) {
             try {
                 const response = await fetch(fileName);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 const textData = await response.text();
                 const items = textData.trim().split('\n');
-                
-                gridContainer.innerHTML = ''; // Clear the "Loading..." message
-
+                gridContainer.innerHTML = '';
                 items.forEach(itemText => {
                     if (itemText) {
                         const gridItem = document.createElement('div');
@@ -230,17 +260,11 @@
         function setupCollapsibleSection(titleId, gridId, fileName) {
             const titleElement = document.getElementById(titleId);
             const gridElement = document.getElementById(gridId);
-
-            if (!titleElement || !gridElement) {
-                console.error("Could not find elements for section:", titleId);
-                return;
-            }
-
+            if (!titleElement || !gridElement) return;
             titleElement.addEventListener('click', () => {
                 gridElement.classList.toggle('collapsed');
                 titleElement.classList.toggle('expanded');
             });
-
             loadDataForGrid(gridElement, fileName);
         }
 
@@ -251,13 +275,51 @@
             { titleId: 'title-have2', gridId: 'grid-have2', fileName: 'trade_have2.txt' },
             { titleId: 'title-have3', gridId: 'grid-have3', fileName: 'trade_have3.txt' }
         ];
+        sections.forEach(section => setupCollapsibleSection(section.titleId, section.gridId, section.fileName));
 
-        sections.forEach(section => {
-            setupCollapsibleSection(section.titleId, section.gridId, section.fileName);
+        // --- Code for Friends Section ---
+
+        // UPDATED: Define the friend data with the new titles and values
+        const friendsData = [
+            { title: "all", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun,Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" },
+            { title: "send", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun" },
+            { title: "open", value: "Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" }
+        ];
+
+        const friendsListContainer = document.getElementById('friends-list');
+
+        friendsData.forEach(friend => {
+            const friendItem = document.createElement('div');
+            friendItem.className = 'friend-item';
+            friendItem.innerHTML = `
+                <p class="friend-title">${friend.title}</p>
+                <button class="copy-btn" data-copy-value="${friend.value}">Copy</button>
+            `;
+            friendsListContainer.appendChild(friendItem);
+        });
+
+        friendsListContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('copy-btn')) {
+                const button = event.target;
+                const valueToCopy = button.dataset.copyValue;
+
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = valueToCopy;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextArea);
+
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }
         });
 
     </script>
 </body>
 </html>
-```
-I have updated the `sections` array in the script to use the new file names without the leading underscores. Remember to rename your actual `.txt` files in your project directory to match these chang
