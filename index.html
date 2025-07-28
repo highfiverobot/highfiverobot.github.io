@@ -104,16 +104,14 @@
         .grid-title.expanded::after {
             content: '▲';
         }
-        .collapsible-content {
-            margin-top: 20px;
-        }
-        .collapsible-content.collapsed {
-            display: none;
-        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
             gap: 10px 15px;
+            margin-top: 20px;
+        }
+        .grid-container.collapsed {
+            display: none;
         }
         .grid-item {
             display: flex;
@@ -129,18 +127,18 @@
             color: #333;
         }
 
-        /* --- Styles for Copyable List Sections (Friends & Search) --- */
-        .copy-item {
+        /* --- Styles for Friends Section --- */
+        .friend-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
         }
-        .copy-item:last-child {
+        .friend-item:last-child {
             border-bottom: none;
         }
-        .copy-title {
+        .friend-title {
             margin: 0;
             font-size: 16px;
             text-align: left;
@@ -172,25 +170,25 @@
         <div id="left-column" class="column">
             <div class="container data-section">
                 <h2 id="title-want" class="grid-title">wanted - all shiny</h2>
-                <div id="grid-want" class="grid-container collapsible-content collapsed">
+                <div id="grid-want" class="grid-container collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
             <div class="container data-section">
                 <h2 id="title-have1" class="grid-title">for trade - ez - all shiny</h2>
-                <div id="grid-have1" class="grid-container collapsible-content collapsed">
+                <div id="grid-have1" class="grid-container collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
             <div class="container data-section">
                 <h2 id="title-have2" class="grid-title">for trade - med - all shiny</h2>
-                <div id="grid-have2" class="grid-container collapsible-content collapsed">
+                <div id="grid-have2" class="grid-container collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
             <div class="container data-section">
                 <h2 id="title-have3" class="grid-title">for trade - hard - all shiny</h2>
-                <div id="grid-have3" class="grid-container collapsible-content collapsed">
+                <div id="grid-have3" class="grid-container collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
@@ -207,21 +205,14 @@
             
             <div class="container">
                 <h2>friends</h2>
-                <div id="friends-list" class="collapsible-content">
+                <div id="friends-list">
                     <!-- Friend items will be dynamically inserted here -->
                 </div>
             </div>
         </div>
 
-        <!-- Right Column -->
+        <!-- Right Column (currently empty) -->
         <div id="right-column" class="column">
-            <!-- NEW: Search Strings Section -->
-            <div class="container data-section">
-                <h2 id="title-search" class="grid-title">search strings</h2>
-                <div id="search-strings-list" class="collapsible-content collapsed">
-                    <!-- Search strings will be dynamically inserted here -->
-                </div>
-            </div>
         </div>
 
     </main>
@@ -264,77 +255,68 @@
             }
         }
 
-        // --- Reusable function to populate a list with copyable items ---
-        function populateCopyableList(container, data) {
-            data.forEach(item => {
-                const copyItem = document.createElement('div');
-                copyItem.className = 'copy-item';
-                copyItem.innerHTML = `
-                    <p class="copy-title">${item.title}</p>
-                    <button class="copy-btn" data-copy-value="${item.value}">Copy</button>
-                `;
-                container.appendChild(copyItem);
-            });
-        }
-
-        // --- Reusable function to set up a single collapsible section ---
-        function setupCollapsible(titleId, contentId) {
+        // --- Function to set up a single collapsible section ---
+        function setupCollapsibleSection(titleId, gridId, fileName) {
             const titleElement = document.getElementById(titleId);
-            const contentElement = document.getElementById(contentId);
-            if (!titleElement || !contentElement) return;
+            const gridElement = document.getElementById(gridId);
+            if (!titleElement || !gridElement) return;
             titleElement.addEventListener('click', () => {
-                contentElement.classList.toggle('collapsed');
+                gridElement.classList.toggle('collapsed');
                 titleElement.classList.toggle('expanded');
             });
+            loadDataForGrid(gridElement, fileName);
         }
 
-        // --- Initialize Left Column (Fetched Grids) ---
-        const gridSections = [
+        // --- Set up all four sections ---
+        const sections = [
             { titleId: 'title-want', gridId: 'grid-want', fileName: 'trade_want.txt' },
             { titleId: 'title-have1', gridId: 'grid-have1', fileName: 'trade_have1.txt' },
             { titleId: 'title-have2', gridId: 'grid-have2', fileName: 'trade_have2.txt' },
             { titleId: 'title-have3', gridId: 'grid-have3', fileName: 'trade_have3.txt' }
         ];
-        gridSections.forEach(section => {
-            setupCollapsible(section.titleId, section.gridId);
-            loadDataForGrid(document.getElementById(section.gridId), section.fileName);
-        });
+        sections.forEach(section => setupCollapsibleSection(section.titleId, section.gridId, section.fileName));
 
-        // --- Initialize Center Column (Friends List) ---
+        // --- Code for Friends Section ---
         const friendsData = [
             { title: "all", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun,Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" },
             { title: "send", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun" },
             { title: "open", value: "Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" }
         ];
-        populateCopyableList(document.getElementById('friends-list'), friendsData);
 
-        // --- Initialize Right Column (Search Strings) ---
-        const searchStringsRawData = `
-### new
-shiny,4*,shadow,maxmove1-&!#max&!#shadhigh&!favorite&!trade&!#2x&!#later&!#misc
-### clean
-#2x&!trade&!#later&!dynamax&!gigantamax&!shadow&!4*&!shiny&!#misc&!favorite
-### review
-#later&!#2x&!trade&!4*&!shiny&!mythical&!legendary&!ultrabeast&!#max&!#shadhigh&!#named
-### highlights
-shiny,4*&age0-4&!trade
-### shadow
-shadhigh&!trade&!#2x
-### max
-#max&!trade&!#2x
-### showcase
-#shadhigh,#max,#misc,shiny,4*&!#2x&!trade
-### trade
-trade
-### good
-2x&!trade&!#later&!dynamax&!gigantamax&!shadow&!4*&!shiny&!#misc&!favorite&3
-### 2x candy
-age0&!#2x&!shadow&!dynamax&!gigantamax&!shiny&bulbasaur, ivysaur, venusaur, charmander, charmeleon, charizard, squirtle, wartortle, blastoise, unown, gyarados, dratini, dragonair, dragonite, porygon, porygon2, porygon-z, scyther, scizor, kleavor, munchlax, snorlax, dunsparce, dudunsparce, shuckle, swinub, piloswine, mamoswine, larvitar, pupitar, tyranitar,  grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, ralts, kirlia, gardevoir, gallade, feebas, milotic, bagon, shelgon, salamence, beldum, metang, metagross, cranidos, rampardos, riolu, lucario, axew, fraxure, haxorus, cubchoo, beartic, tynamo, eelektrik, eelektross, litwick, lampent, chandelure, deino, zweilous, hydreigon, skarmory, amaura, aurorus, tyrunt, tyrantrum, sandile, krokorok, krookodile, yamask, cofagrigus, archen, archeops, pawniard, bisharp, kingambit, heatmor, goomy, sliggoo, goodra, jangmo-o, hakamo-o, kommo-o, salandit, salazzle, charjabug, vikavolt, corvisquire, corviknight, cetoddle, cetitan, teddiursa, ursaring, ursaluna, scraggy, scrafty, sableye, oshawott, dewott, samurott,chansey,noibat,sharpedo, onix, chikorita, cyndaquil, totodile, togepi, frigibax,120,102
-### evolution candy costs
-# evolution candy costs
-### Candy cost 0:
-64,67,75,93,525,533,588,616,708,710
-### Candy cost 12:
-10,13,16,265,293,519,664
-### Candy cost 25:
-1,4,7,19,172,29,32,173,174,41,43,60,63,66,69,74,81,92,111,440,116,238,239,240,137,147,152,155,158,161,165,175,179,298,183,187,220,236,246,252,255,258,263,270,273,280,287,304,406,328,355,360,363,37
+        const friendsListContainer = document.getElementById('friends-list');
+
+        friendsData.forEach(friend => {
+            const friendItem = document.createElement('div');
+            friendItem.className = 'friend-item';
+            friendItem.innerHTML = `
+                <p class="friend-title">${friend.title}</p>
+                <button class="copy-btn" data-copy-value="${friend.value}">Copy</button>
+            `;
+            friendsListContainer.appendChild(friendItem);
+        });
+
+        friendsListContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('copy-btn')) {
+                const button = event.target;
+                const valueToCopy = button.dataset.copyValue;
+
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = valueToCopy;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextArea);
+
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }
+        });
+
+    </script>
+</body>
+</html>
