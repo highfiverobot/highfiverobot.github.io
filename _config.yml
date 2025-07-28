@@ -1,2 +1,0 @@
-# Exclude nothing, or explicitly include files starting with an underscore
-include: ['trade_have.csv']

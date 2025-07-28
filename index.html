@@ -3,196 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV Data Tables</title>
-    <!-- Tailwind CSS CDN for basic styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>JS Verification Site</title>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
-            display: flex;
-            flex-direction: column; /* Arrange content vertically */
-            align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
-            gap: 2rem; /* Space between containers */
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 2.5rem;
-            border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-            width: 100%;
-            max-width: 960px; /* Max width for readability */
-            overflow-x: auto; /* Enable horizontal scrolling for wide tables */
-        }
-        table {
-            width: 100%;
-            border-collapse: separate; /* Allows border-radius on cells */
-            border-spacing: 0;
-            border-radius: 0.5rem; /* Rounded corners for the table */
-            overflow: hidden; /* Ensures content respects border-radius */
-        }
-        th, td {
-            padding: 1rem 1.5rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb; /* Light gray border */
-        }
-        th {
-            background-color: #4f46e5; /* Indigo 600 */
-            color: #ffffff;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.875rem; /* sm text */
-        }
-        tr:last-child td {
-            border-bottom: none; /* No border for the last row */
-        }
-        tbody tr:hover {
-            background-color: #eff6ff; /* Light blue on hover */
-        }
-        .loading-message {
+            font-family: Arial, sans-serif;
             text-align: center;
-            padding: 2rem;
-            font-size: 1.125rem; /* lg text */
-            color: #6b7280; /* Gray 500 */
+            margin-top: 50px;
         }
-        .error-message {
-            text-align: center;
-            padding: 2rem;
-            font-size: 1.125rem; /* lg text */
-            color: #ef4444; /* Red 500 */
+        #message {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        #status {
+            font-weight: bold;
+            color: gray;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">My Have List</h1>
-        <div id="have-list-container" class="loading-message">
-            Loading 'have' data...
-        </div>
-    </div>
+    <h1 id="message">Loading...</h1>
+    <p id="status">JavaScript Status: Not yet run</p>
 
-    <div class="container">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">My Want List</h1>
-        <div id="want-list-container" class="loading-message">
-            Loading 'want' data...
-        </div>
-    </div>
-
-    <!-- Papa Parse CDN for easy CSV parsing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    
-    <!-- Your custom script, placed AFTER the CDN script -->
     <script>
-        // Function to fetch CSV data and render it as an HTML table
-        // Now accepts filePath and containerId as arguments for reusability
-        async function loadCsvData(filePath, containerId, title) {
-            const tableContainer = document.getElementById(containerId);
-            if (!tableContainer) {
-                console.error(`Error: Container with ID '${containerId}' not found.`);
-                return;
-            }
+        // This is where your JavaScript code goes.
 
-            console.log(`Log 0: Current URL: ${window.location.href}`); 
-            console.log(`Log 1: Attempting to load CSV data from: ${filePath} into container: ${containerId}`); 
+        // 1. Change the text of the H1 element
+        document.getElementById('message').textContent = "Hello from JavaScript!";
 
-            try {
-                const resolvedCsvUrl = new URL(filePath, window.location.href).toString();
-                console.log(`Log 1.5: Resolved CSV URL for ${filePath}: ${resolvedCsvUrl}`); 
+        // 2. Change the text of the P element to confirm JS ran
+        document.getElementById('status').textContent = "JavaScript Status: Successfully Executed!";
+        document.getElementById('status').style.color = "green"; // Make it green for clarity
 
-                const response = await fetch(resolvedCsvUrl); 
-                console.log(`Log 2: Fetch response received for ${filePath}:`, response); 
+        // 3. Log a message to the browser's console (most reliable verification)
+        console.log("🥳 JavaScript successfully ran on GitHub Pages!");
+        console.log("You can see this message in your browser's Developer Console (F12 or Ctrl+Shift+I).");
 
-                if (!response.ok) {
-                    console.error(`Log 3: HTTP error! Status for ${filePath}: ${response.status}, Status Text: ${response.statusText}`); 
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const csvText = await response.text();
-                console.log(`Log 4: CSV text content fetched for ${filePath}: ${csvText.substring(0, 200)}...`); 
-
-                // Use Papa Parse to parse the CSV text
-                if (typeof PapaParse === 'undefined') {
-                    console.error('Log 4.5: PapaParse is undefined. Cannot parse CSV. Check CDN load.');
-                    tableContainer.innerHTML = `<div class="error-message">Error: PapaParse library not loaded. Please check your internet connection or CDN link.</div>`;
-                    return;
-                }
-
-                PapaParse.parse(csvText, { 
-                    header: false, 
-                    skipEmptyLines: true, 
-                    complete: function(results) {
-                        const data = results.data;
-                        const errors = results.errors;
-
-                        console.log(`Log 5: Papa Parse results for ${filePath}:`, results); 
-                        console.log(`Log 6: Parsed data for ${filePath}:`, data); 
-                        console.log(`Log 7: Parsing errors for ${filePath}:`, errors); 
-
-                        if (errors.length > 0) {
-                            console.error(`CSV Parsing Errors for ${filePath}:`, errors);
-                            tableContainer.innerHTML = `<div class="error-message">Error parsing CSV for ${title}: ${errors[0].message}</div>`;
-                            return;
-                        }
-
-                        if (data.length === 0) {
-                            tableContainer.innerHTML = `<div class="loading-message">No data found in ${title}.</div>`;
-                            return;
-                        }
-
-                        const table = document.createElement('table');
-                        table.classList.add('min-w-full', 'divide-y', 'divide-gray-200', 'shadow-sm', 'rounded-lg');
-
-                        const thead = document.createElement('thead');
-                        const headerRow = document.createElement('tr');
-                        
-                        const numColumns = data[0].length;
-                        for (let i = 0; i < numColumns; i++) {
-                            const th = document.createElement('th');
-                            th.textContent = `Column ${i + 1}`; 
-                            headerRow.appendChild(th);
-                        }
-                        thead.appendChild(headerRow);
-                        table.appendChild(thead);
-
-                        const tbody = document.createElement('tbody');
-                        tbody.classList.add('bg-white', 'divide-y', 'divide-gray-200');
-
-                        data.forEach(rowData => {
-                            const tr = document.createElement('tr');
-                            rowData.forEach(cellData => {
-                                const td = document.createElement('td');
-                                td.textContent = cellData || ''; 
-                                tr.appendChild(td);
-                            });
-                            tbody.appendChild(tr);
-                        });
-                        table.appendChild(tbody);
-
-                        tableContainer.innerHTML = '';
-                        tableContainer.appendChild(table);
-                        console.log(`Log 8: Table rendered successfully for ${filePath}.`); 
-                    }
-                });
-
-            } catch (error) {
-                console.error(`Log 9: Error loading CSV data in catch block for ${filePath}:`, error); 
-                tableContainer.innerHTML = `<div class="error-message">Failed to load CSV data for ${title}. Please check the file path and network connection.</div>`;
-            }
-        }
-
-        // Call functions when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Load the "have" list
-            loadCsvData('trade_have.csv', 'have-list-container', 'My Have List');
-            
-            // Load the "want" list
-            loadCsvData('trade_want.csv', 'want-list-container', 'My Want List');
-        });
     </script>
 </body>
 </html>
