@@ -8,27 +8,51 @@
         /* Basic styling for the page */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin: 0;
             background-color: #f0f2f5;
             color: #333;
-            text-align: center;
             padding: 20px;
         }
+
+        /* --- NEW: 3-Column Layout --- */
+        #main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Make layout responsive: stack columns on smaller screens */
+        @media (max-width: 900px) {
+            #main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .container {
             background: white;
             padding: 2rem 3rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
-            width: 90%;
-            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
         }
+
+        /* Remove bottom margin from the last container in a column */
+        .column > .container:last-child {
+            margin-bottom: 0;
+        }
+
         .data-section {
-             margin-bottom: 0; /* Remove bottom margin if it's the only one */
+             margin-bottom: 1rem;
         }
+        .column > .data-section:last-child {
+            margin-bottom: 0;
+        }
+
         #message {
             font-size: 24px;
             color: #1a1a1a;
@@ -63,27 +87,28 @@
             min-height: 25px; /* Reserve space to prevent layout shift */
         }
 
-        /* --- UPDATED: Styles now use classes to apply to multiple sections --- */
+        /* Styles for collapsible sections */
         .grid-title {
             cursor: pointer;
-            user-select: none; /* Prevents text selection on click */
+            user-select: none;
             display: inline-block;
             position: relative;
+            text-align: center;
         }
         .grid-title::after {
-            content: '▼'; /* Down arrow for collapsed state */
+            content: '▼';
             font-size: 0.7em;
             margin-left: 8px;
             position: absolute;
             top: 5px;
         }
         .grid-title.expanded::after {
-            content: '▲'; /* Up arrow for expanded state */
+            content: '▲';
         }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
-            gap: 10px 15px; /* row-gap column-gap */
+            gap: 10px 15px;
             margin-top: 20px;
         }
         .grid-container.collapsed {
@@ -95,6 +120,7 @@
             align-items: center;
             min-height: 20px;
             padding: 5px;
+            text-align: center;
         }
         .grid-item h3 {
             margin: 0;
@@ -106,41 +132,57 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1 id="message">Loading...</h1>
-        <p id="status">JavaScript Status: Not yet run</p>
-        <button id="myButton">Click Me!</button>
-        <p id="buttonResult"></p>
-    </div>
+    <!-- NEW: Main layout container -->
+    <main id="main-layout">
 
-    <!-- UPDATED: Four separate data sections -->
-    <div class="container data-section">
-        <h2 id="title-want" class="grid-title">wanted - all shiny</h2>
-        <div id="grid-want" class="grid-container collapsed">
-            <p>Loading...</p>
+        <!-- NEW: Left Column -->
+        <div id="left-column" class="column">
+            <!-- The four data sections are now inside this column -->
+            <div class="container data-section">
+                <h2 id="title-want" class="grid-title">wanted - all shiny</h2>
+                <div id="grid-want" class="grid-container collapsed">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        
+            <div class="container data-section">
+                <h2 id="title-have1" class="grid-title">for trade - ez - all shiny</h2>
+                <div id="grid-have1" class="grid-container collapsed">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        
+            <div class="container data-section">
+                <h2 id="title-have2" class="grid-title">for trade - med - all shiny</h2>
+                <div id="grid-have2" class="grid-container collapsed">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        
+            <div class="container data-section">
+                <h2 id="title-have3" class="grid-title">for trade - hard - all shiny</h2>
+                <div id="grid-have3" class="grid-container collapsed">
+                    <p>Loading...</p>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="container data-section">
-        <h2 id="title-have1" class="grid-title">for trade - ez - all shiny</h2>
-        <div id="grid-have1" class="grid-container collapsed">
-            <p>Loading...</p>
+        <!-- NEW: Center Column -->
+        <div id="center-column" class="column">
+            <div class="container">
+                <h1 id="message">Loading...</h1>
+                <p id="status">JavaScript Status: Not yet run</p>
+                <button id="myButton">Click Me!</button>
+                <p id="buttonResult"></p>
+            </div>
         </div>
-    </div>
 
-    <div class="container data-section">
-        <h2 id="title-have2" class="grid-title">for trade - med - all shiny</h2>
-        <div id="grid-have2" class="grid-container collapsed">
-            <p>Loading...</p>
+        <!-- NEW: Right Column (currently empty) -->
+        <div id="right-column" class="column">
+            <!-- You can add content here later -->
         </div>
-    </div>
 
-    <div class="container data-section">
-        <h2 id="title-have3" class="grid-title">for trade - hard - all shiny</h2>
-        <div id="grid-have3" class="grid-container collapsed">
-            <p>Loading...</p>
-        </div>
-    </div>
+    </main>
 
 
     <script>
@@ -158,7 +200,7 @@
             buttonResult.textContent = `🎉 Button clicked at ${currentTime}.`;
         });
 
-        // --- UPDATED: Reusable function to load data into a grid ---
+        // --- Reusable function to load data into a grid ---
         async function loadDataForGrid(gridContainer, fileName) {
             try {
                 const response = await fetch(fileName);
@@ -171,7 +213,7 @@
                 gridContainer.innerHTML = ''; // Clear the "Loading..." message
 
                 items.forEach(itemText => {
-                    if (itemText) { // Avoid creating empty items
+                    if (itemText) {
                         const gridItem = document.createElement('div');
                         gridItem.classList.add('grid-item');
                         gridItem.innerHTML = `<h3>${itemText}</h3>`;
@@ -184,7 +226,7 @@
             }
         }
 
-        // --- UPDATED: Function to set up a single collapsible section ---
+        // --- Function to set up a single collapsible section ---
         function setupCollapsibleSection(titleId, gridId, fileName) {
             const titleElement = document.getElementById(titleId);
             const gridElement = document.getElementById(gridId);
@@ -194,26 +236,22 @@
                 return;
             }
 
-            // Set up the click listener for collapsing
             titleElement.addEventListener('click', () => {
                 gridElement.classList.toggle('collapsed');
                 titleElement.classList.toggle('expanded');
             });
 
-            // Load the data for this section
             loadDataForGrid(gridElement, fileName);
         }
 
-        // --- UPDATED: Set up all four sections ---
-        // I corrected what looked like a typo from '_trade_have12txt' to '_trade_have2.txt' for consistency.
+        // --- Set up all four sections ---
         const sections = [
-            { titleId: 'title-want', gridId: 'grid-want', fileName: 'trade_want.txt' },
-            { titleId: 'title-have1', gridId: 'grid-have1', fileName: 'trade_have1.txt' },
-            { titleId: 'title-have2', gridId: 'grid-have2', fileName: 'trade_have2.txt' },
-            { titleId: 'title-have3', gridId: 'grid-have3', fileName: 'trade_have3.txt' }
+            { titleId: 'title-want', gridId: 'grid-want', fileName: '_trade_want.txt' },
+            { titleId: 'title-have1', gridId: 'grid-have1', fileName: '_trade_have1.txt' },
+            { titleId: 'title-have2', gridId: 'grid-have2', fileName: '_trade_have2.txt' },
+            { titleId: 'title-have3', gridId: 'grid-have3', fileName: '_trade_have3.txt' }
         ];
 
-        // Initialize each section
         sections.forEach(section => {
             setupCollapsibleSection(section.titleId, section.gridId, section.fileName);
         });
