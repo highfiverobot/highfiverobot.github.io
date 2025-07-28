@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Page with String-Sourced Grid</title>
+    <title>JS Page with Fetched Data Grid</title>
     <style>
         /* Basic styling for the page */
         body {
@@ -60,7 +60,7 @@
             min-height: 25px; /* Reserve space to prevent layout shift */
         }
 
-        /* --- Styles for the Data Grid (Adjusted for single-item display) --- */
+        /* --- Styles for the Data Grid --- */
         #grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
@@ -101,9 +101,9 @@
     </div>
 
     <div class="container">
-        <h2>Data Grid from String</h2>
+        <h2>Data Grid from File</h2>
         <div id="grid-container">
-            <!-- Grid items will be dynamically inserted here by JavaScript -->
+            <p>Loading project data...</p>
         </div>
     </div>
 
@@ -124,41 +124,50 @@
         });
 
 
-        // --- NEW: Code to create a grid from a multi-line string ---
+        // --- NEW: Code to create a grid by fetching data from an external file ---
 
-        // 1. Define the data source as a multi-line string.
-        const projectListString = `
-            Project-Alpha
-            Project-Beta
-            Project-Gamma
-            Project-Delta
-            Project-Epsilon
-            Project-Zeta
-            Project-Eta
-            Project-Theta
-            Project-Iota
-            Project-Kappa
-        `;
+        // We wrap the logic in an async function to use 'await' for the fetch call.
+        async function loadProjectsFromFile() {
+            const gridContainer = document.getElementById('grid-container');
+            try {
+                // 1. Fetch the content of the projects.txt file.
+                // This assumes 'projects.txt' is in the same directory as your HTML file.
+                const response = await fetch('projects.txt');
+                
+                // Check if the request was successful (e.g., not a 404 Not Found error)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
 
-        // 2. Parse the string into an array of words.
-        // .trim() removes leading/trailing whitespace (like the first and last empty lines).
-        // .split(/\s+/) splits the string by one or more whitespace characters (spaces, newlines, etc.).
-        const projectData = projectListString.trim().split(/\s+/);
+                // 2. Get the text content from the response.
+                const projectListString = await response.text();
 
-        // 3. Get a reference to the grid container element
-        const gridContainer = document.getElementById('grid-container');
+                // 3. Parse the string into an array of words.
+                const projectData = projectListString.trim().split(/\s+/);
 
-        // 4. Loop through the new string array and create an element for each item
-        projectData.forEach(itemTitle => {
-            const gridItem = document.createElement('div');
-            gridItem.classList.add('grid-item');
-            
-            // The inner HTML now only contains the title inside an H3 tag.
-            // 'itemTitle' is now a string like "Project-Alpha".
-            gridItem.innerHTML = `<h3>${itemTitle}</h3>`;
-            
-            gridContainer.appendChild(gridItem);
-        });
+                // Clear the "Loading..." message from the container
+                gridContainer.innerHTML = '';
+
+                // 4. Loop through the data and create an element for each item.
+                projectData.forEach(itemTitle => {
+                    // Ensure we don't create items for empty lines from the text file
+                    if (itemTitle) { 
+                        const gridItem = document.createElement('div');
+                        gridItem.classList.add('grid-item');
+                        gridItem.innerHTML = `<h3>${itemTitle}</h3>`;
+                        gridContainer.appendChild(gridItem);
+                    }
+                });
+
+            } catch (error) {
+                // If the file can't be loaded, display an error message in the grid.
+                console.error('Error loading projects.txt:', error);
+                gridContainer.innerHTML = `<p style="color: red; text-align: center;">Could not load project data. Make sure 'projects.txt' exists.</p>`;
+            }
+        }
+
+        // Call the function to start the data fetching process.
+        loadProjectsFromFile();
 
     </script>
 </body>
