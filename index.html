@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Page with Multiple Grids</title>
     <style>
-        /* --- UPDATED: Dark Mode Theme --- */
+        /* --- UPDATED: OLED Dark Mode Theme --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            background-color: #121212; /* Dark background */
+            background-color: #000000; /* Pure black background */
             color: #e0e0e0; /* Light text */
             padding: 10px; /* Reduced padding */
         }
@@ -32,7 +32,8 @@
         }
 
         .container {
-            background: #1e1e1e; /* Darker container background */
+            background: #000000; /* Pure black container background */
+            border: 1px solid #2a2a2a; /* Subtle border for separation */
             padding: 1rem 1.5rem; /* Reduced padding */
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
@@ -51,6 +52,11 @@
         }
         .column > .data-section:last-child {
             margin-bottom: 0;
+        }
+        
+        /* --- UPDATED: Lighter font weight for headers --- */
+        h2 {
+            font-weight: 400;
         }
 
         #message {
@@ -163,7 +169,7 @@
             background-color: #28a745;
         }
 
-        /* --- NEW: Styles for Links List --- */
+        /* Styles for Links List */
         .links-list {
             list-style: none;
             padding: 0;
@@ -183,6 +189,20 @@
         }
         .links-list a:hover {
             text-decoration: underline;
+        }
+        
+        /* Styles for Types List */
+        .types-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            font-size: 14px;
+        }
+        .types-list li {
+            padding: 5px 0;
+        }
+        .types-list strong {
+            color: #fdd835; /* A gold color for emphasis */
         }
     </style>
 </head>
@@ -204,6 +224,12 @@
                     <p>Loading...</p>
                 </div>
             </div>
+            <div class="container">
+                <h2>🧑‍🤝‍🧑friends🧑‍🤝‍🧑</h2>
+                <div id="friends-list">
+                    <!-- Friend items will be dynamically inserted here -->
+                </div>
+            </div>
         </div>
 
         <!-- Center Column -->
@@ -215,11 +241,9 @@
                 <p id="buttonResult"></p>
             </div>
             
-            <!-- UPDATED: Links Section -->
             <div class="container">
                 <h2>🧑‍💻links🧑‍💻</h2>
                 <ul class="links-list">
-                    
                     <li><a href="https://open-web-calendar.hosted.quelltext.eu/calendar.html?url=https%3A%2F%2Fgithub.com%2Fothyn%2Fgo-calendar%2Freleases%2Flatest%2Fdownload%2Fgocal.ics" target="_blank" rel="noopener noreferrer">EVENTS</a></li>
                     <li><a href="http://dialgadex.com" target="_blank" rel="noopener noreferrer">DialgaDex</a></li>
                     <li><a href="https://pogostring.com/" target="_blank" rel="noopener noreferrer">Pogostring</a></li>
@@ -234,21 +258,39 @@
                     <li><a href="https://docs.google.com/spreadsheets/d/12AUOOrRzOwOy6WP-OIyMCo5pDNQW3MksfXL5pMDIp1c/edit#gid=849875596" target="_blank" rel="noopener noreferrer">Community Data Spreadsheet</a></li>
                 </ul>
             </div>
-            
-            <div class="container">
-                <h2>friends</h2>
-                <div id="friends-list">
-                    <!-- Friend items will be dynamically inserted here -->
-                </div>
-            </div>
         </div>
 
         <!-- Right Column -->
         <div id="right-column" class="column">
             <div class="container">
-                <h2 id="title-search" class="grid-title">search strings</h2>
+                <h2 id="title-search" class="grid-title">🔍strings🔍</h2>
                 <div id="search-strings-list" class="collapsible-content collapsed">
                     <!-- Search string items will be dynamically inserted here -->
+                </div>
+            </div>
+            
+            <div class="container">
+                <h2 id="title-types" class="grid-title">🌿types🔥</h2>
+                <div id="types-content" class="collapsible-content collapsed">
+                    <ul class="types-list">
+                        <li>Fire, Flying, Rock > <strong>BUG</strong> > Grass, Psychic, Dark</li>
+                        <li>Bug, Fairy, Fighting > <strong>DARK</strong> > Ghost, Psychic</li>
+                        <li>Dragon, Fairy, Ice > <strong>DRAGON</strong> > Dragon</li>
+                        <li>Ground > <strong>ELECTRIC</strong> > Flying, Water</li>
+                        <li>Fairy, Flying, Psychic > <strong>FIGHTING</strong> > Dark, Ice, Normal, Rock, Steel</li>
+                        <li>Ground, Rock, Water > <strong>FIRE</strong> > Bug, Grass, Ice, Steel</li>
+                        <li>Electric, Ice, Rock > <strong>FLYING</strong> > Bug, Fighting, Grass</li>
+                        <li>Dark, Ghost > <strong>GHOST</strong> > Ghost, Psychic</li>
+                        <li>Bug, Fire, Flying, Ice, Poison > <strong>GRASS</strong> > Ground, Rock, Water</li>
+                        <li>Grass, Ice, Water > <strong>GROUND</strong> > Electric, Fire, Poison, Rock, Steel</li>
+                        <li>Fighting, Fire, Rock, Steel > <strong>ICE</strong> > Dragon, Flying, Grass, Ground</li>
+                        <li>Fighting > <strong>NORMAL</strong> > —</li>
+                        <li>Ground, Psychic > <strong>POISON</strong> > Fairy, Grass</li>
+                        <li>Bug, Dark, Ghost > <strong>PSYCHIC</strong> > Fighting, Poison</li>
+                        <li>Fighting, Grass, Ground, Steel, Water > <strong>ROCK</strong> > Bug, Fire, Flying, Ice</li>
+                        <li>Fighting, Fire, Ground > <strong>STEEL</strong> > Fairy, Ice, Rock</li>
+                        <li>Electric, Grass > <strong>WATER</strong> > Fire, Ground, Rock</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -258,9 +300,8 @@
 
     <script>
         // --- This part runs on page load to confirm JS is working ---
-        // document.getElementById('message').textContent = "Hello from JavaScript!"; // This line is kept to show JS runs, but we've given the H1 a permanent title.
         document.getElementById('status').textContent = "JavaScript Status: Successfully Executed!";
-        document.getElementById('status').style.color = "#4caf50"; // Brighter green for dark mode
+        document.getElementById('status').style.color = "#4caf50";
         
         // --- Code to make the button interactive ---
         const myButton = document.getElementById('myButton');
@@ -292,36 +333,26 @@
             }
         }
 
-        // --- NEW: Reusable function to load and combine data from multiple files ---
+        // --- Reusable function to load and combine data from multiple files ---
         async function loadAndCombineGrids(gridContainer, fileNames) {
             try {
-                // Fetch all files concurrently
                 const responses = await Promise.all(fileNames.map(file => fetch(file)));
-
-                // Check if all requests were successful
                 for (const response of responses) {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status} for ${response.url}`);
                     }
                 }
-
-                // Get text from all responses
                 const textDataArray = await Promise.all(responses.map(res => res.text()));
-
-                // Combine the items from all files into a single array
                 const allItems = textDataArray.flatMap(text => text.trim().split('\n'));
-
-                gridContainer.innerHTML = ''; // Clear the "Loading..." message
-
+                gridContainer.innerHTML = '';
                 allItems.forEach(itemText => {
-                    if (itemText) { // Avoid creating empty items
+                    if (itemText) {
                         const gridItem = document.createElement('div');
                         gridItem.classList.add('grid-item');
                         gridItem.innerHTML = `<h3>${itemText}</h3>`;
                         gridContainer.appendChild(gridItem);
                     }
                 });
-
             } catch (error) {
                 console.error(`Error loading combined data:`, error);
                 gridContainer.innerHTML = `<p style="color: red;">Could not load combined trade data.</p>`;
@@ -356,15 +387,11 @@
         }
 
         // --- Initialize Left Column Sections ---
-        // Setup "wanted" section
         setupCollapsible('title-want', 'grid-want');
         loadDataForGrid(document.getElementById('grid-want'), 'trade_want.txt');
-
-        // Setup combined "for trade" section
         setupCollapsible('title-trade', 'grid-trade');
         const tradeFiles = ['trade_have3.txt', 'trade_have2.txt', 'trade_have1.txt'];
         loadAndCombineGrids(document.getElementById('grid-trade'), tradeFiles);
-
 
         // --- Code for Friends Section (Center Column) ---
         const friendsData = [
@@ -398,6 +425,9 @@
         ];
         populateCopyableList(document.getElementById('search-strings-list'), searchStringsData);
         setupCollapsible('title-search', 'search-strings-list');
+        
+        // --- NEW: Initialize Types Section ---
+        setupCollapsible('title-types', 'types-content');
 
 
         // --- Single, delegated event listener for all copy buttons ---
