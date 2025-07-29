@@ -208,12 +208,15 @@
 
         <!-- Center Column -->
         <div id="center-column" class="column">
+            <!-- JS Test Section is now commented out -->
+            <!-- 
             <div class="container">
                 <h1 id="message">JS Test Section</h1>
                 <p id="status">JavaScript Status: Not yet run</p>
                 <button id="myButton">Click Me!</button>
                 <p id="buttonResult"></p>
             </div>
+            -->
             
             <!-- UPDATED: Links Section -->
             <div class="container">
@@ -255,8 +258,8 @@
 
 
     <script>
+        /*
         // --- This part runs on page load to confirm JS is working ---
-        // document.getElementById('message').textContent = "Hello from JavaScript!"; // This line is kept to show JS runs, but we've given the H1 a permanent title.
         document.getElementById('status').textContent = "JavaScript Status: Successfully Executed!";
         document.getElementById('status').style.color = "#4caf50"; // Brighter green for dark mode
         
@@ -267,6 +270,7 @@
             const currentTime = new Date().toLocaleTimeString();
             buttonResult.textContent = `🎉 Button clicked at ${currentTime}.`;
         });
+        */
 
         // --- Reusable function to load data into a grid from a single file ---
         async function loadDataForGrid(gridContainer, fileName) {
@@ -383,7 +387,7 @@
             { title: "showcase", value: "#shadhigh,#max,#misc,shiny,4*&!#2x&!trade" },
             { title: "trade", value: "trade" },
             { title: "good", value: "2x&!trade&!#later&!dynamax&!gigantamax&!shadow&!4*&!shiny&!#misc&!favorite&3" },
-            { title: "2x candy", value: "age0&!#2x&!shadow&!dynamax&!gigantamax&!shiny&bulbasaur, ivysaur, venusaur, charmander, charmeleon, charizard, squirtle, wartortle, blastoise, unown, gyarados, dratini, dragonair, dragonite, porygon, porygon2, porygon-z, scyther, scizor, kleavor, munchlax, snorlax, dunsparce, dudunsparce, shuckle, swinub, piloswine, mamoswine, larvitar, pupitar, tyranitar, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, ralts, kirlia, gardevoir, gallade, feebas, milotic, bagon, shelgon, salamence, beldum, metang, metagross, cranidos, rampardos, riolu, lucario, axew, fraxure, haxorus, cubchoo, beartic, tynamo, eelektrik, eelektross, litwick, lampent, chandelure, deino, zweilous, hydreigon, skarmory, amaura, aurorus, tyrunt, tyrantrum, sandile, krokorok, krookodile, yamask, cofagrigus, archen, archeops, pawniard, bisharp, kingambit, heatmor, goomy, sliggoo, goodra, jangmo-o, hakamo-o, kommo-o, salandit, salazzle, charjabug, vikavolt, corvisquire, corviknight, cetoddle, cetitan, teddiursa, ursaring, ursaluna, scraggy, scrafty, sableye, oshawott, dewott, samurott, chansey, noibat, sharpedo, onix, chikorita, cyndaquil, totodile, togepi, frigibax,120,102" },
+            { title: "2x candy", value: "age0&!#2x&!shadow&!dynamax&!gigantamax&!shiny&bulbasaur, ivysaur, venusaur, charmander, charmeleon, charizard, squirtle, wartortle, blastoise, unown, gyarados, dratini, dragonair, dragonite, porygon, porygon2, porygon-z, scyther, scizor, kleavor, munchlax, snorlax, dunsparce, dudunsparce, shuckle, swinub, piloswine, mamoswine, larvitar, pupitar, tyranitar, grovyle, sceptile, torchic, combusken, blaziken, mudkip, marshtomp, swampert, ralts, kirlia, gardevoir, gallade, feebas, milotic, bagon, shelgon, salamence, beldum, metang, metross, cranidos, rampardos, riolu, lucario, axew, fraxure, haxorus, cubchoo, beartic, tynamo, eelektrik, eelektross, litwick, lampent, chandelure, deino, zweilous, hydreigon, skarmory, amaura, aurorus, tyrunt, tyrantrum, sandile, krokorok, krookodile, yamask, cofagrigus, archen, archeops, pawniard, bisharp, kingambit, heatmor, goomy, sliggoo, goodra, jangmo-o, hakamo-o, kommo-o, salandit, salazzle, charjabug, vikavolt, corvisquire, corviknight, cetoddle, cetitan, teddiursa, ursaring, ursaluna, scraggy, scrafty, sableye, oshawott, dewott, samurott, chansey, noibat, sharpedo, onix, chikorita, cyndaquil, totodile, togepi, frigibax,120,102" },
             { title: "Candy cost 0", value: "64,67,75,93,525,533,588,616,708,710" },
             { title: "Candy cost 12", value: "10,13,16,265,293,519,664" },
             { title: "Candy cost 25", value: "1,4,7,19,172,29,32,173,174,41,43,60,63,66,69,74,81,92,111,440,116,238,239,240,137,147,152,155,158,161,165,175,179,298,183,187,220,236,246,252,255,258,263,270,273,280,287,304,406,328,355,360,363,371,374,387,390,393,396,403,443,495,498,501,506,535,540,543,551,574,577,582,599,602,607,610,633,650,653,656,661,669,704,722,725,728,731,736,782,679,761,789,810,813,816,821,824,837,856,859,885" },
@@ -421,6 +425,4 @@
             }
         });
 
-    </script>
-</body>
-</html>
+    </scri
