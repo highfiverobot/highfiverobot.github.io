@@ -170,24 +170,24 @@
         }
 
         /* Styles for Links List */
-        .links-list {
+        .links-list, .ideas-list {
             list-style: none;
             padding: 0;
             text-align: left;
         }
-        .links-list li {
+        .links-list li, .ideas-list li {
             padding: 8px 0;
             border-bottom: 1px solid #333;
         }
-        .links-list li:last-child {
+        .links-list li:last-child, .ideas-list li:last-child {
             border-bottom: none;
         }
-        .links-list a {
+        .links-list a, .ideas-list a {
             color: #8ab4f8; /* A nice blue for links in dark mode */
             text-decoration: none;
             font-size: 16px;
         }
-        .links-list a:hover {
+        .links-list a:hover, .ideas-list a:hover {
             text-decoration: underline;
         }
         
@@ -203,6 +203,19 @@
         }
         .types-list strong {
             color: #fdd835; /* A gold color for emphasis */
+        }
+        
+        /* --- NEW: Styles for Ideas List --- */
+        .ideas-list code {
+            background-color: #2a2a2a;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #f06292; /* A pinkish color for code */
+        }
+        .ideas-list ul {
+            padding-left: 20px;
+            list-style: '› '; /* Custom bullet */
         }
     </style>
 </head>
@@ -263,7 +276,7 @@
         <!-- Right Column -->
         <div id="right-column" class="column">
             <div class="container">
-                <h2 id="title-search" class="grid-title">🔍strings🔍</h2>
+                <h2 id="title-search" class="grid-title">🔍search strings🔍</h2>
                 <div id="search-strings-list" class="collapsible-content collapsed">
                     <!-- Search string items will be dynamically inserted here -->
                 </div>
@@ -290,6 +303,29 @@
                         <li>Fighting, Grass, Ground, Steel, Water > <strong>ROCK</strong> > Bug, Fire, Flying, Ice</li>
                         <li>Fighting, Fire, Ground > <strong>STEEL</strong> > Fairy, Ice, Rock</li>
                         <li>Electric, Grass > <strong>WATER</strong> > Fire, Ground, Rock</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- NEW: Ideas Section -->
+            <div class="container">
+                <h2 id="title-ideas" class="grid-title">💡ideas💡</h2>
+                <div id="ideas-content" class="collapsible-content collapsed">
+                    <ul class="ideas-list">
+                        <li>check out <code>count, countcandy, countcandyxl</code></li>
+                        <li>what would be the point of <code>!count1</code></li>
+                        <li>add third row with can mega, 12 candy evo</li>
+                        <li><code>megaevolve&mega-2</code> Finds Megas you can evolve that aren't maxed out level</li>
+                        <li>can <code>maxmove</code> replace <code>dynamax</code> and <code>gigantamax</code>?</li>
+                        <li>it's maxmove1-3, this also includes zam/zac</li>
+                        <li>new third row, have to shift candy
+                            <ul>
+                                <li>12 candy evo</li>
+                                <li>can mega</li>
+                            </ul>
+                        </li>
+                        <li><a href="https://github.com/Mygod/pogoplusle/releases" target="_blank" rel="noopener noreferrer">PogoPlusLE Releases</a></li>
+                        <li>app that automates reconnecting to G++</li>
                     </ul>
                 </div>
             </div>
@@ -428,6 +464,9 @@
         
         // --- NEW: Initialize Types Section ---
         setupCollapsible('title-types', 'types-content');
+        
+        // --- NEW: Initialize Ideas Section ---
+        setupCollapsible('title-ideas', 'ideas-content');
 
 
         // --- Single, delegated event listener for all copy buttons ---
