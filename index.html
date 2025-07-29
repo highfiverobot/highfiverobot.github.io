@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Page with Multiple Grids</title>
     <style>
-        /* Basic styling for the page */
+        /* --- UPDATED: Dark Mode Theme --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            background-color: #f0f2f5;
-            color: #333;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text */
             padding: 20px;
         }
 
@@ -32,13 +32,13 @@
         }
 
         .container {
-            background: white;
+            background: #1e1e1e; /* Darker container background */
             padding: 2rem 3rem;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             margin-bottom: 2rem;
             width: 100%;
-            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            box-sizing: border-box;
             text-align: center;
         }
 
@@ -55,12 +55,12 @@
 
         #message {
             font-size: 24px;
-            color: #1a1a1a;
+            color: #f5f5f5;
             margin-bottom: 10px;
         }
         #status {
             font-weight: bold;
-            color: gray;
+            color: #9e9e9e; /* Lighter gray for dark mode */
             margin-bottom: 30px;
         }
         #myButton {
@@ -82,9 +82,9 @@
         #buttonResult {
             margin-top: 25px;
             font-size: 18px;
-            color: #0056b3;
+            color: #007bff;
             font-weight: 500;
-            min-height: 25px; /* Reserve space to prevent layout shift */
+            min-height: 25px;
         }
 
         /* Styles for collapsible sections */
@@ -104,14 +104,16 @@
         .grid-title.expanded::after {
             content: '▲';
         }
+        .collapsible-content {
+            margin-top: 20px;
+        }
+        .collapsible-content.collapsed {
+            display: none;
+        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
             gap: 10px 15px;
-            margin-top: 20px;
-        }
-        .grid-container.collapsed {
-            display: none;
         }
         .grid-item {
             display: flex;
@@ -124,16 +126,16 @@
             margin: 0;
             font-size: 14px;
             font-weight: 400;
-            color: #333;
+            color: #e0e0e0;
         }
 
-        /* --- UPDATED: Generic Styles for Copyable List Sections --- */
+        /* Generic Styles for Copyable List Sections */
         .copy-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #333; /* Darker border */
         }
         .copy-item:last-child {
             border-bottom: none;
@@ -152,13 +154,13 @@
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.2s ease;
-            white-space: nowrap; /* Prevents button text from wrapping */
+            white-space: nowrap;
         }
         .copy-btn:hover {
             background-color: #5a6268;
         }
         .copy-btn.copied {
-            background-color: #28a745; /* Green color for success */
+            background-color: #28a745;
         }
     </style>
 </head>
@@ -170,25 +172,25 @@
         <div id="left-column" class="column">
             <div class="container data-section">
                 <h2 id="title-want" class="grid-title">wanted - all shiny</h2>
-                <div id="grid-want" class="grid-container collapsed">
+                <div id="grid-want" class="grid-container collapsible-content collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
             <div class="container data-section">
                 <h2 id="title-have1" class="grid-title">for trade - ez - all shiny</h2>
-                <div id="grid-have1" class="grid-container collapsed">
+                <div id="grid-have1" class="grid-container collapsible-content collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
             <div class="container data-section">
                 <h2 id="title-have2" class="grid-title">for trade - med - all shiny</h2>
-                <div id="grid-have2" class="grid-container collapsed">
+                <div id="grid-have2" class="grid-container collapsible-content collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
             <div class="container data-section">
                 <h2 id="title-have3" class="grid-title">for trade - hard - all shiny</h2>
-                <div id="grid-have3" class="grid-container collapsed">
+                <div id="grid-have3" class="grid-container collapsible-content collapsed">
                     <p>Loading...</p>
                 </div>
             </div>
@@ -213,10 +215,11 @@
 
         <!-- Right Column -->
         <div id="right-column" class="column">
-            <!-- UPDATED: Search Strings Section -->
             <div class="container">
-                <h2>search strings</h2>
-                <div id="search-strings-list">
+                <!-- UPDATED: Title is now clickable -->
+                <h2 id="title-search" class="grid-title">search strings</h2>
+                <!-- UPDATED: Content is now collapsible -->
+                <div id="search-strings-list" class="collapsible-content collapsed">
                     <!-- Search string items will be dynamically inserted here -->
                 </div>
             </div>
@@ -229,8 +232,7 @@
         // --- This part runs on page load to confirm JS is working ---
         document.getElementById('message').textContent = "Hello from JavaScript!";
         document.getElementById('status').textContent = "JavaScript Status: Successfully Executed!";
-        document.getElementById('status').style.color = "#28a745";
-        console.log("🥳 JavaScript successfully ran on GitHub Pages!");
+        document.getElementById('status').style.color = "#4caf50"; // Brighter green for dark mode
         
         // --- Code to make the button interactive ---
         const myButton = document.getElementById('myButton');
@@ -262,32 +264,10 @@
             }
         }
 
-        // --- Function to set up a single collapsible section ---
-        function setupCollapsibleSection(titleId, gridId, fileName) {
-            const titleElement = document.getElementById(titleId);
-            const gridElement = document.getElementById(gridId);
-            if (!titleElement || !gridElement) return;
-            titleElement.addEventListener('click', () => {
-                gridElement.classList.toggle('collapsed');
-                titleElement.classList.toggle('expanded');
-            });
-            loadDataForGrid(gridElement, fileName);
-        }
-
-        // --- Set up all four sections in the Left Column ---
-        const sections = [
-            { titleId: 'title-want', gridId: 'grid-want', fileName: 'trade_want.txt' },
-            { titleId: 'title-have1', gridId: 'grid-have1', fileName: 'trade_have1.txt' },
-            { titleId: 'title-have2', gridId: 'grid-have2', fileName: 'trade_have2.txt' },
-            { titleId: 'title-have3', gridId: 'grid-have3', fileName: 'trade_have3.txt' }
-        ];
-        sections.forEach(section => setupCollapsibleSection(section.titleId, section.gridId, section.fileName));
-
-        // --- UPDATED: Reusable function to populate a list with copyable items ---
+        // --- Reusable function to populate a list with copyable items ---
         function populateCopyableList(container, data) {
              data.forEach(item => {
                 const copyItem = document.createElement('div');
-                // Use the generic class name
                 copyItem.className = 'copy-item';
                 copyItem.innerHTML = `
                     <p class="copy-title">${item.title}</p>
@@ -296,6 +276,32 @@
                 container.appendChild(copyItem);
             });
         }
+        
+        // --- NEW: Generic function to set up a collapsible element ---
+        function setupCollapsible(titleId, contentId) {
+            const titleElement = document.getElementById(titleId);
+            const contentElement = document.getElementById(contentId);
+            if (!titleElement || !contentElement) {
+                 console.error("Collapsible setup failed: Could not find", titleId, "or", contentId);
+                 return;
+            }
+            titleElement.addEventListener('click', () => {
+                contentElement.classList.toggle('collapsed');
+                titleElement.classList.toggle('expanded');
+            });
+        }
+
+        // --- Set up all four sections in the Left Column ---
+        const gridSections = [
+            { titleId: 'title-want', gridId: 'grid-want', fileName: 'trade_want.txt' },
+            { titleId: 'title-have1', gridId: 'grid-have1', fileName: 'trade_have1.txt' },
+            { titleId: 'title-have2', gridId: 'grid-have2', fileName: 'trade_have2.txt' },
+            { titleId: 'title-have3', gridId: 'grid-have3', fileName: 'trade_have3.txt' }
+        ];
+        gridSections.forEach(section => {
+            setupCollapsible(section.titleId, section.gridId);
+            loadDataForGrid(document.getElementById(section.gridId), section.fileName);
+        });
 
         // --- Code for Friends Section (Center Column) ---
         const friendsData = [
@@ -305,16 +311,17 @@
         ];
         populateCopyableList(document.getElementById('friends-list'), friendsData);
 
-        // --- NEW: Code for Search Strings Section (Right Column) ---
+        // --- Code for Search Strings Section (Right Column) ---
         const searchStringsData = [
             { title: "test", value: "beebeebee" }
         ];
         populateCopyableList(document.getElementById('search-strings-list'), searchStringsData);
+        // NEW: Make the search strings section collapsible
+        setupCollapsible('title-search', 'search-strings-list');
 
 
-        // --- UPDATED: Single, delegated event listener for all copy buttons ---
+        // --- Single, delegated event listener for all copy buttons ---
         document.getElementById('main-layout').addEventListener('click', (event) => {
-            // Check if a copy button was clicked
             if (event.target.classList.contains('copy-btn')) {
                 const button = event.target;
                 const valueToCopy = button.dataset.copyValue;
