@@ -61,11 +61,13 @@
 🔴 Gastrodon
 🔴 Glameow
 🟢 Golett
+🔴 Golisopod
 🔴 Goomy
 🟢 Gothita
 🟢 Grimer
 🟢 Grubbin
 🟢 Gulpin
+🔴 Gyarados
 🔴 Heracross
 🟡 Hitmonlee
 🔴 Hitmontop
@@ -77,6 +79,7 @@
 🟢 Jigglypuff
 🟢 Jolteon
 🟢 Karrablast
+🔴 kingambit
 🔴 Kingler (dynamax)
 🔴 Koffing
 🔴 Komala (party hat)
@@ -95,6 +98,7 @@
 🔴 Machamp (gigantamax)
 🟢 Machop
 🟢 Magikarp
+🟢 Magnemite
 🔴 Makuhita
 🟢 Mankey
 🔴 Mareanie
@@ -168,6 +172,7 @@
 🔴 Starmie
 🟢 Starly
 🟢 Staryu
+🔴 steelix
 🔴 Stufful
 🟢 Stunfisk
 🟡 Sudowoodo
@@ -178,6 +183,7 @@
 🔴 Tangela
 🔴 Tauros
 🟢 Teddiursa
+🔴 Terrakion
 🟡 Throh
 🔴 Thundurus
 🟢 Timburr
