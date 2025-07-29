@@ -55,42 +55,8 @@
         }
         
         /* --- UPDATED: Lighter font weight for headers --- */
-        h2 {
+        h2, h3 {
             font-weight: 400;
-        }
-
-        #message {
-            font-size: 24px;
-            color: #f5f5f5;
-            margin-bottom: 10px;
-        }
-        #status {
-            font-weight: bold;
-            color: #9e9e9e; /* Lighter gray for dark mode */
-            margin-bottom: 30px;
-        }
-        #myButton {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 16px; /* Reduced padding */
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-        }
-        #myButton:hover {
-            background-color: #0056b3;
-        }
-        #myButton:active {
-            transform: scale(0.98);
-        }
-        #buttonResult {
-            margin-top: 25px;
-            font-size: 18px;
-            color: #007bff;
-            font-weight: 500;
-            min-height: 25px;
         }
 
         /* Styles for collapsible sections */
@@ -169,17 +135,17 @@
             background-color: #28a745;
         }
 
-        /* Styles for Links List */
-        .links-list, .ideas-list {
+        /* Styles for various lists */
+        .links-list, .ideas-list, .challenges-list {
             list-style: none;
             padding: 0;
             text-align: left;
         }
-        .links-list li, .ideas-list li {
+        .links-list li, .ideas-list li, .challenges-list li {
             padding: 8px 0;
             border-bottom: 1px solid #333;
         }
-        .links-list li:last-child, .ideas-list li:last-child {
+        .links-list li:last-child, .ideas-list li:last-child, .challenges-list li:last-child {
             border-bottom: none;
         }
         .links-list a, .ideas-list a {
@@ -191,7 +157,6 @@
             text-decoration: underline;
         }
         
-        /* Styles for Types List */
         .types-list {
             list-style: none;
             padding: 0;
@@ -205,7 +170,6 @@
             color: #fdd835; /* A gold color for emphasis */
         }
         
-        /* Styles for Ideas List */
         .ideas-list code {
             background-color: #2a2a2a;
             padding: 2px 5px;
@@ -217,8 +181,17 @@
             padding-left: 20px;
             list-style: '› '; /* Custom bullet */
         }
+        
+        .challenges-list {
+            list-style: '» ';
+            padding-left: 20px;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #333;
+            margin: 1rem 0;
+        }
 
-        /* --- NEW: Styles for Search Input --- */
         .search-input {
             width: 100%;
             padding: 8px 12px;
@@ -266,11 +239,55 @@
 
         <!-- Center Column -->
         <div id="center-column" class="column">
+            <!-- NEW: Challenges Section -->
             <div class="container">
-                <h1 id="message">JS Test Section</h1>
-                <p id="status">JavaScript Status: Not yet run</p>
-                <button id="myButton">Click Me!</button>
-                <p id="buttonResult"></p>
+                <h2 id="title-challenges" class="grid-title">🏆challenges🏆</h2>
+                <div id="challenges-content" class="collapsible-content collapsed">
+                    <h3>Level 46</h3>
+                    <ul class="challenges-list">
+                        <li>XP: 82M total (15.5M for this level)</li>
+                        <li>Complete 100 Field Research tasks</li>
+                        <li>Take a snapshot of a Pokémon 7 days in a row</li>
+                        <li>Make 50 Excellent Throws</li>
+                        <li>Hatch 30 Eggs</li>
+                    </ul>
+                    <hr>
+                    <h3>Level 47</h3>
+                    <ul class="challenges-list">
+                        <li>XP: 100M total (18M for this level)</li>
+                        <li>Win 30 raids using all unique Pokémon species</li>
+                        <li>Win a 3★ raid with only Pokémon ≤1,500 CP</li>
+                        <li>Power up 3 Pokémon to max CP</li>
+                        <li>Earn 20 Platinum Medals</li>
+                    </ul>
+                    <hr>
+                    <h3>Level 48</h3>
+                    <ul class="challenges-list">
+                        <li>XP: 121M total (21M for this level)</li>
+                        <li>Receive 10 Souvenirs from your buddy</li>
+                        <li>Earn 300 hearts with your buddy</li>
+                        <li>Walk 200 km with your buddy</li>
+                        <li>Walk 25 km in a week, 8 times</li>
+                    </ul>
+                    <hr>
+                    <h3>Level 49</h3>
+                    <ul class="challenges-list">
+                        <li>XP: 146M total (25M for this level)</li>
+                        <li>Make 10 trades with Pokémon caught ≥300 km apart</li>
+                        <li>Obtain 50 Lucky Pokémon in trades</li>
+                        <li>Send 500 Gifts to friends</li>
+                        <li>Earn 35 Platinum Medals</li>
+                    </ul>
+                    <hr>
+                    <h3>Level 50</h3>
+                    <ul class="challenges-list">
+                        <li>XP: 176M total (30M for this level)</li>
+                        <li>Make 999 Excellent Throws</li>
+                        <li>Catch a Legendary Pokémon in your next 5 encounters</li>
+                        <li>Defeat a GO Rocket Leader with Pokémon ≤2,500 CP</li>
+                        <li>Achieve Rank 10 in the GO Battle League</li>
+                    </ul>
+                </div>
             </div>
             
             <div class="container">
@@ -339,18 +356,6 @@
 
 
     <script>
-        // --- This part runs on page load to confirm JS is working ---
-        document.getElementById('status').textContent = "JavaScript Status: Successfully Executed!";
-        document.getElementById('status').style.color = "#4caf50";
-        
-        // --- Code to make the button interactive ---
-        const myButton = document.getElementById('myButton');
-        const buttonResult = document.getElementById('buttonResult');
-        myButton.addEventListener('click', () => {
-            const currentTime = new Date().toLocaleTimeString();
-            buttonResult.textContent = `🎉 Button clicked at ${currentTime}.`;
-        });
-
         // --- Reusable function to load data into a grid from a single file ---
         async function loadDataForGrid(gridContainer, fileName) {
             try {
@@ -399,13 +404,26 @@
             }
         }
         
-        // --- Reusable function to load raw HTML content from a file ---
-        async function loadHtmlContent(container, fileName) {
+        // --- UPDATED: Function to load and format plain text content from a file ---
+        async function loadAndFormatTextContent(container, fileName) {
             try {
                 const response = await fetch(fileName);
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-                const htmlData = await response.text();
-                container.innerHTML = htmlData;
+                const textData = await response.text();
+                
+                // Process the text to convert it to HTML
+                const lines = textData.trim().split('\n');
+                let htmlContent = '<ul class="ideas-list">';
+                lines.forEach(line => {
+                    if (line.trim()) { // Make sure the line is not empty
+                        // Replace backticks with <code> tags
+                        let processedLine = line.replace(/`(.*?)`/g, '<code>$1</code>');
+                        htmlContent += `<li>${processedLine}</li>`;
+                    }
+                });
+                htmlContent += '</ul>';
+
+                container.innerHTML = htmlContent;
             } catch (error) {
                 console.error(`Error loading content from ${fileName}:`, error);
                 container.innerHTML = `<p style="color: red;">Could not load content from ${fileName}.</p>`;
@@ -439,7 +457,7 @@
             });
         }
 
-        // --- NEW: Function to set up a search filter for a grid ---
+        // --- Function to set up a search filter for a grid ---
         function setupSearchFilter(inputId, gridId) {
             const searchInput = document.getElementById(inputId);
             const grid = document.getElementById(gridId);
@@ -471,7 +489,8 @@
             setupSearchFilter('search-trade', 'grid-trade');
         });
 
-        // --- Code for Friends Section (Center Column) ---
+        // --- Initialize Center Column Sections ---
+        setupCollapsible('title-challenges', 'challenges-content');
         const friendsData = [
             { title: "all", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun,Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" },
             { title: "send", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun" },
@@ -479,7 +498,7 @@
         ];
         populateCopyableList(document.getElementById('friends-list'), friendsData);
 
-        // --- Code for Search Strings Section (Right Column) ---
+        // --- Initialize Right Column Sections ---
         const searchStringsData = [
             { title: "new", value: "shiny,4*,shadow,maxmove1-&!#max&!#shadhigh&!favorite&!trade&!#2x&!#later&!#misc" },
             { title: "clean", value: "#2x&!trade&!#later&!dynamax&!gigantamax&!shadow&!4*&!shiny&!#misc&!favorite" },
@@ -508,7 +527,7 @@
         
         // UPDATED: Initialize Ideas Section to load from file
         setupCollapsible('title-ideas', 'ideas-content');
-        loadHtmlContent(document.getElementById('ideas-content'), 'ideas.txt');
+        loadAndFormatTextContent(document.getElementById('ideas-content'), 'ideas.txt');
 
 
         // --- Single, delegated event listener for all copy buttons ---
