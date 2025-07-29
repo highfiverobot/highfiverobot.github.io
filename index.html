@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Page with Multiple Grids</title>
+    <title>highfiverobot pokemon go page</title>
     <style>
         /* --- UPDATED: OLED Dark Mode Theme --- */
         body {
@@ -205,7 +205,7 @@
             color: #fdd835; /* A gold color for emphasis */
         }
         
-        /* --- NEW: Styles for Ideas List --- */
+        /* Styles for Ideas List */
         .ideas-list code {
             background-color: #2a2a2a;
             padding: 2px 5px;
@@ -307,26 +307,11 @@
                 </div>
             </div>
 
-            <!-- NEW: Ideas Section -->
+            <!-- Ideas Section -->
             <div class="container">
                 <h2 id="title-ideas" class="grid-title">💡ideas💡</h2>
                 <div id="ideas-content" class="collapsible-content collapsed">
-                    <ul class="ideas-list">
-                        <li>check out <code>count, countcandy, countcandyxl</code></li>
-                        <li>what would be the point of <code>!count1</code></li>
-                        <li>add third row with can mega, 12 candy evo</li>
-                        <li><code>megaevolve&mega-2</code> Finds Megas you can evolve that aren't maxed out level</li>
-                        <li>can <code>maxmove</code> replace <code>dynamax</code> and <code>gigantamax</code>?</li>
-                        <li>it's maxmove1-3, this also includes zam/zac</li>
-                        <li>new third row, have to shift candy
-                            <ul>
-                                <li>12 candy evo</li>
-                                <li>can mega</li>
-                            </ul>
-                        </li>
-                        <li><a href="https://github.com/Mygod/pogoplusle/releases" target="_blank" rel="noopener noreferrer">PogoPlusLE Releases</a></li>
-                        <li>app that automates reconnecting to G++</li>
-                    </ul>
+                    <p>Loading...</p>
                 </div>
             </div>
         </div>
@@ -392,6 +377,19 @@
             } catch (error) {
                 console.error(`Error loading combined data:`, error);
                 gridContainer.innerHTML = `<p style="color: red;">Could not load combined trade data.</p>`;
+            }
+        }
+        
+        // --- NEW: Reusable function to load raw HTML content from a file ---
+        async function loadHtmlContent(container, fileName) {
+            try {
+                const response = await fetch(fileName);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const htmlData = await response.text();
+                container.innerHTML = htmlData;
+            } catch (error) {
+                console.error(`Error loading content from ${fileName}:`, error);
+                container.innerHTML = `<p style="color: red;">Could not load content from ${fileName}.</p>`;
             }
         }
 
@@ -462,11 +460,11 @@
         populateCopyableList(document.getElementById('search-strings-list'), searchStringsData);
         setupCollapsible('title-search', 'search-strings-list');
         
-        // --- NEW: Initialize Types Section ---
         setupCollapsible('title-types', 'types-content');
         
-        // --- NEW: Initialize Ideas Section ---
+        // UPDATED: Initialize Ideas Section to load from file
         setupCollapsible('title-ideas', 'ideas-content');
+        loadHtmlContent(document.getElementById('ideas-content'), 'ideas.txt');
 
 
         // --- Single, delegated event listener for all copy buttons ---
