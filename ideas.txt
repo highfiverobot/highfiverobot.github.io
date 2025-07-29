@@ -18,7 +18,6 @@ https://github.com/Mygod/pogoplusle/releases
 
  <li><a href="https://old.reddit.com/r/TheSilphRoad/comments/1cak4ho/how_to_create_automatic_afk_evolutions_gesture_in/" target="_blank" rel="noopener noreferrer">app that automates reconnecting to G++</a></li>
 
-
 buttons for search to sort by name, dex, rarity
 pixel font
 change order based on page width
@@ -27,4 +26,4 @@ put both trade and want into collapsible column
 make spreadsheet of all pokemon
 columns
 
-link to steal or deal
+link steal or deal
