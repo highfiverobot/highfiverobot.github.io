@@ -1,205 +1,205 @@
- * 🟢 Abra
- * 🔴 Absol
- * 🟢 Aipom
- * 🟢 Alolan
- * 🟡 Ampharos
- * 🟡 Arcanine
- * 🟡 Arcanine (hisuian)
- * 🟡 Aromatisse
- * 🔴 Articuno (galarian)
- * 🟡 Audino
- * 🔴 Axew
- * 🟢 Bagon
- * 🔴 Barboach
- * 🟢 Beldum
- * 🔴 Bellsprout
- * 🟢 Bidoof
- * 🟡 Binacle
- * 🔴 Blacephalon
- * 🟢 Blitzle
- * 🟢 Bonsly
- * 🟢 Bronzor
- * 🟢 Burmy
- * 🟢 Caterpie
- * 🟢 Chansey
- * 🟢 Chespin
- * 🟢 Chimchar
- * 🔴 Chimecho
- * 🟢 Clamperl
- * 🟡 Clawitzer
- * 🔴 Clefairy
- * 🟢 Combee
- * 🔴 Crabrawler
- * 🔴 Cresselia
- * 🟢 Cubone
- * 🟡 Cutiefly
- * 🔴 Cyndaquil
- * 🔴 Delibird
- * 🔴 Dewpider
- * 🟢 Drati
- * 🟢 Dreepy
- * 🟢 Drilbur
- * 🟢 Dugtrio
- * 🟢 Durant
- * 🟢 Duskull
- * 🟢 Eevee
- * 🔴 Electabuzz
- * 🔴 Electrike
- * 🟢 Elgyem
- * 🟢 Espurr
- * 🟢 Falinks
- * 🟢 Feebas
- * 🟢 Fennekin
- * 🟢 Ferroseed
- * 🔴 Finneon
- * 🟢 Fletchling
- * 🔴 Fomantis
- * 🔴 Froakie
- * 🟢 Fuecoco
- * 🟢 Furfrou
- * 🔴 Gastly
- * 🔴 Gastrodon
- * 🔴 Glameow
- * 🟢 Golett
- * 🔴 Goomy
- * 🟢 Gothita
- * 🟢 Grimer
- * 🟢 Grubbin
- * 🟢 Gulpin
- * 🔴 Heracross
- * 🟡 Hitmonlee
- * 🔴 Hitmontop
- * 🟢 Hoppip
- * 🟢 Houndour
- * 🟢 Huntail
- * 🔴 Hypno
- * 🟢 Jangmo-o
- * 🟢 Jigglypuff
- * 🟢 Jolteon
- * 🟢 Karrablast
- * 🔴 Kingler (dynamax)
- * 🔴 Koffing
- * 🔴 Komala (party hat)
- * 🔴 Kyurem
- * 🔴 Lapras
- * 🔴 Larvesta
- * 🔴 Latios
- * 🟢 Lechonk
- * 🟡 Lickitung
- * 🟡 Lilligant
- * 🔴 Lillipup
- * 🟢 Litleo
- * 🔴 Litwick
- * 🟢 Lopunny
- * 🔴 Luvdisc
- * 🔴 Machamp (gigantamax)
- * 🟢 Machop
- * 🟢 Magikarp
- * 🔴 Makuhita
- * 🟢 Mankey
- * 🔴 Mareanie
- * 🟢 Marill
- * 🟡 Mawile
- * 🟢 Meditite
- * 🟢 Meowth
- * 🟢 Meowth (hisuian)
- * 🔴 Milotic
- * 🔴 Minccino
- * 🟢 Morelull
- * 🟢 Munna
- * 🔴 Natu
- * 🔴 Nidoran (f)
- * 🔴 Ninjask
- * 🔴 Noibat
- * 🔴 Numel
- * 🔴 Nymble
- * 🟢 Oddish
- * 🟢 Panpour
- * 🟢 Pawmi
- * 🟢 Pawniard
- * 🟢 Phantump
- * 🟢 Pidgey
- * 🔴 Pikachu
- * 🔴 Pikachu (captain hat)
- * 🔴 Pikachu (red visor)
- * 🔴 Pignite
- * 🟢 Piplup
- * 🔴 Ponyta
- * 🔴 Poochyena
- * 🟢 Popplio
- * 🔴 Porygon-z
- * 🔴 Psyduck
- * 🟢 Quaxly
- * 🟢 Qwilfish
- * 🟢 Ralts
- * 🟢 Rattata (alolan)
- * 🔴 Regirock
- * 🟢 Remoraid
- * 🔴 Rhyhorn
- * 🔴 Roggenrola
- * 🟡 Rookidee
- * 🔴 Rowlet
- * 🟡 Sableye
- * 🔴 Salamence
- * 🟡 Samurott
- * 🟢 Sandshrew (alolan)
- * 🔴 Sandygast
- * 🔴 Sceptile
- * 🟡 Scolipede
- * 🟢 Scizor
- * 🟢 Scyther
- * 🟢 Seel
- * 🔴 Sewaddle
- * 🟢 Shelmet
- * 🔴 Shieldon
- * 🔴 Shuckle
- * 🟢 Slowpoke
- * 🟡 Slurpuff
- * 🔴 Smeargle
- * 🟢 Sneasel
- * 🟢 Snivy
- * 🟢 Snorunt
- * 🔴 Snover
- * 🟢 Snubbull
- * 🟢 Spearow
- * 🔴 Spheal
- * 🔴 Spoink
- * 🔴 Sprigatito
- * 🔴 Starmie
- * 🟢 Starly
- * 🟢 Staryu
- * 🔴 Stufful
- * 🟢 Stunfisk
- * 🟡 Sudowoodo
- * 🟢 Swablu
- * 🟡 Swanna
- * 🟢 Swinub
- * 🟡 Swirlix
- * 🔴 Tangela
- * 🔴 Tauros
- * 🟢 Teddiursa
- * 🟡 Throh
- * 🔴 Thundurus
- * 🟢 Timburr
- * 🟢 Tirtouga
- * 🔴 Togedemaru
- * 🔴 Togekiss
- * 🟡 Togepi
- * 🟢 Totodile
- * 🔴 Tympole
- * 🔴 Tyranitar
- * 🔴 Ursaluna (bloodmoon)
- * 🟢 Vanillite
- * 🟢 Vaporeon
- * 🟢 Venonat
- * 🟢 Voltorb
- * 🟢 Voltorb (hisuian)
- * 🔴 Vullaby
- * 🔴 Weedle
- * 🟢 Wimpod
- * 🟢 Wooloo
- * 🟢 Wormadam
- * 🟢 Wurmple
- * 🔴 Yungoos
- * 🔴 Zapdos
- * 🟢 Zigzagoon (galarian)
+🟢 Abra
+🔴 Absol
+🟢 Aipom
+🟢 Alolan
+🟡 Ampharos
+🟡 Arcanine
+🟡 Arcanine (hisuian)
+🟡 Aromatisse
+🔴 Articuno (galarian)
+🟡 Audino
+🔴 Axew
+🟢 Bagon
+🔴 Barboach
+🟢 Beldum
+🔴 Bellsprout
+🟢 Bidoof
+🟡 Binacle
+🔴 Blacephalon
+🟢 Blitzle
+🟢 Bonsly
+🟢 Bronzor
+🟢 Burmy
+🟢 Caterpie
+🟢 Chansey
+🟢 Chespin
+🟢 Chimchar
+🔴 Chimecho
+🟢 Clamperl
+🟡 Clawitzer
+🔴 Clefairy
+🟢 Combee
+🔴 Crabrawler
+🔴 Cresselia
+🟢 Cubone
+🟡 Cutiefly
+🔴 Cyndaquil
+🔴 Delibird
+🔴 Dewpider
+🟢 Drati
+🟢 Dreepy
+🟢 Drilbur
+🟢 Dugtrio
+🟢 Durant
+🟢 Duskull
+🟢 Eevee
+🔴 Electabuzz
+🔴 Electrike
+🟢 Elgyem
+🟢 Espurr
+🟢 Falinks
+🟢 Feebas
+🟢 Fennekin
+🟢 Ferroseed
+🔴 Finneon
+🟢 Fletchling
+🔴 Fomantis
+🔴 Froakie
+🟢 Fuecoco
+🟢 Furfrou
+🔴 Gastly
+🔴 Gastrodon
+🔴 Glameow
+🟢 Golett
+🔴 Goomy
+🟢 Gothita
+🟢 Grimer
+🟢 Grubbin
+🟢 Gulpin
+🔴 Heracross
+🟡 Hitmonlee
+🔴 Hitmontop
+🟢 Hoppip
+🟢 Houndour
+🟢 Huntail
+🔴 Hypno
+🟢 Jangmo-o
+🟢 Jigglypuff
+🟢 Jolteon
+🟢 Karrablast
+🔴 Kingler (dynamax)
+🔴 Koffing
+🔴 Komala (party hat)
+🔴 Kyurem
+🔴 Lapras
+🔴 Larvesta
+🔴 Latios
+🟢 Lechonk
+🟡 Lickitung
+🟡 Lilligant
+🔴 Lillipup
+🟢 Litleo
+🔴 Litwick
+🟢 Lopunny
+🔴 Luvdisc
+🔴 Machamp (gigantamax)
+🟢 Machop
+🟢 Magikarp
+🔴 Makuhita
+🟢 Mankey
+🔴 Mareanie
+🟢 Marill
+🟡 Mawile
+🟢 Meditite
+🟢 Meowth
+🟢 Meowth (hisuian)
+🔴 Milotic
+🔴 Minccino
+🟢 Morelull
+🟢 Munna
+🔴 Natu
+🔴 Nidoran (f)
+🔴 Ninjask
+🔴 Noibat
+🔴 Numel
+🔴 Nymble
+🟢 Oddish
+🟢 Panpour
+🟢 Pawmi
+🟢 Pawniard
+🟢 Phantump
+🟢 Pidgey
+🔴 Pikachu
+🔴 Pikachu (captain hat)
+🔴 Pikachu (red visor)
+🔴 Pignite
+🟢 Piplup
+🔴 Ponyta
+🔴 Poochyena
+🟢 Popplio
+🔴 Porygon-z
+🔴 Psyduck
+🟢 Quaxly
+🟢 Qwilfish
+🟢 Ralts
+🟢 Rattata (alolan)
+🔴 Regirock
+🟢 Remoraid
+🔴 Rhyhorn
+🔴 Roggenrola
+🟡 Rookidee
+🔴 Rowlet
+🟡 Sableye
+🔴 Salamence
+🟡 Samurott
+🟢 Sandshrew (alolan)
+🔴 Sandygast
+🔴 Sceptile
+🟡 Scolipede
+🟢 Scizor
+🟢 Scyther
+🟢 Seel
+🔴 Sewaddle
+🟢 Shelmet
+🔴 Shieldon
+🔴 Shuckle
+🟢 Slowpoke
+🟡 Slurpuff
+🔴 Smeargle
+🟢 Sneasel
+🟢 Snivy
+🟢 Snorunt
+🔴 Snover
+🟢 Snubbull
+🟢 Spearow
+🔴 Spheal
+🔴 Spoink
+🔴 Sprigatito
+🔴 Starmie
+🟢 Starly
+🟢 Staryu
+🔴 Stufful
+🟢 Stunfisk
+🟡 Sudowoodo
+🟢 Swablu
+🟡 Swanna
+🟢 Swinub
+🟡 Swirlix
+🔴 Tangela
+🔴 Tauros
+🟢 Teddiursa
+🟡 Throh
+🔴 Thundurus
+🟢 Timburr
+🟢 Tirtouga
+🔴 Togedemaru
+🔴 Togekiss
+🟡 Togepi
+🟢 Totodile
+🔴 Tympole
+🔴 Tyranitar
+🔴 Ursaluna (bloodmoon)
+🟢 Vanillite
+🟢 Vaporeon
+🟢 Venonat
+🟢 Voltorb
+🟢 Voltorb (hisuian)
+🔴 Vullaby
+🔴 Weedle
+🟢 Wimpod
+🟢 Wooloo
+🟢 Wormadam
+🟢 Wurmple
+🔴 Yungoos
+🔴 Zapdos
+🟢 Zigzagoon (galarian)
