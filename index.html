@@ -217,6 +217,19 @@
             padding-left: 20px;
             list-style: '› '; /* Custom bullet */
         }
+        
+        /* --- NEW: Styles for Search Input --- */
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -227,14 +240,22 @@
         <div id="left-column" class="column">
             <div class="container data-section">
                 <h2 id="title-want" class="grid-title">✨wanted✨</h2>
-                <div id="grid-want" class="grid-container collapsible-content collapsed">
-                    <p>Loading...</p>
+                <div class="collapsible-content collapsed">
+                    <!-- NEW: Search bar for wanted list -->
+                    <input type="text" id="search-want" class="search-input" placeholder="Filter wanted list...">
+                    <div id="grid-want" class="grid-container">
+                        <p>Loading...</p>
+                    </div>
                 </div>
             </div>
             <div class="container data-section">
                 <h2 id="title-trade" class="grid-title">✨available✨</h2>
-                <div id="grid-trade" class="grid-container collapsible-content collapsed">
-                    <p>Loading...</p>
+                <div class="collapsible-content collapsed">
+                    <!-- NEW: Search bar for available list -->
+                    <input type="text" id="search-trade" class="search-input" placeholder="Filter available list...">
+                    <div id="grid-trade" class="grid-container">
+                        <p>Loading...</p>
+                    </div>
                 </div>
             </div>
             <div class="container">
@@ -380,7 +401,7 @@
             }
         }
         
-        // --- NEW: Reusable function to load raw HTML content from a file ---
+        // --- Reusable function to load raw HTML content from a file ---
         async function loadHtmlContent(container, fileName) {
             try {
                 const response = await fetch(fileName);
@@ -409,7 +430,7 @@
         // --- Generic function to set up a collapsible element ---
         function setupCollapsible(titleId, contentId) {
             const titleElement = document.getElementById(titleId);
-            const contentElement = document.getElementById(contentId);
+            const contentElement = document.getElementById(contentId).parentElement; // Target the parent .collapsible-content
             if (!titleElement || !contentElement) {
                  console.error("Collapsible setup failed: Could not find", titleId, "or", contentId);
                  return;
@@ -419,13 +440,38 @@
                 titleElement.classList.toggle('expanded');
             });
         }
+        
+        // --- NEW: Function to set up a search filter for a grid ---
+        function setupSearchFilter(inputId, gridId) {
+            const searchInput = document.getElementById(inputId);
+            const grid = document.getElementById(gridId);
+            
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const items = grid.getElementsByClassName('grid-item');
+                
+                Array.from(items).forEach(item => {
+                    const itemText = item.textContent.toLowerCase();
+                    if (itemText.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
 
         // --- Initialize Left Column Sections ---
-        setupCollapsible('title-want', 'grid-want');
-        loadDataForGrid(document.getElementById('grid-want'), 'trade_want.txt');
-        setupCollapsible('title-trade', 'grid-trade');
+        setupCollapsible('title-want', 'search-want');
+        loadDataForGrid(document.getElementById('grid-want'), 'trade_want.txt').then(() => {
+            setupSearchFilter('search-want', 'grid-want');
+        });
+        
+        setupCollapsible('title-trade', 'search-trade');
         const tradeFiles = ['trade_have3.txt', 'trade_have2.txt', 'trade_have1.txt'];
-        loadAndCombineGrids(document.getElementById('grid-trade'), tradeFiles);
+        loadAndCombineGrids(document.getElementById('grid-trade'), tradeFiles).then(() => {
+            setupSearchFilter('search-trade', 'grid-trade');
+        });
 
         // --- Code for Friends Section (Center Column) ---
         const friendsData = [
