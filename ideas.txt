@@ -15,3 +15,5 @@ but:
 https://github.com/Mygod/pogoplusle/releases
 
 app that automates reconnecting to G++
+
+https://old.reddit.com/r/TheSilphRoad/comments/1cak4ho/how_to_create_automatic_afk_evolutions_gesture_in/
