@@ -214,7 +214,7 @@
             <div class="container data-section">
                 <h2 id="title-want" class="grid-title">✨wanted✨</h2>
                 <div id="content-want" class="collapsible-content collapsed">
-                    <input type="text" id="search-want" class="search-input" placeholder="Filter wanted list...">
+                    <input type="text" id="search-want" class="search-input" placeholder="enter a pokemon...">
                     <div id="grid-want" class="grid-container">
                         <p>Loading...</p>
                     </div>
@@ -223,7 +223,7 @@
             <div class="container data-section">
                 <h2 id="title-trade" class="grid-title">✨available✨</h2>
                 <div id="content-trade" class="collapsible-content collapsed">
-                    <input type="text" id="search-trade" class="search-input" placeholder="Filter available list...">
+                    <input type="text" id="search-trade" class="search-input" placeholder="enter a pokemon...">
                     <div id="grid-trade" class="grid-container">
                         <p>Loading...</p>
                     </div>
@@ -483,7 +483,7 @@
         });
         
         setupCollapsible('title-trade', 'content-trade');
-        const tradeFiles = ['trade_have3.txt', 'trade_have2.txt', 'trade_have1.txt'];
+        const tradeFiles = ['trade_have1.txt'];
         loadAndCombineGrids(document.getElementById('grid-trade'), tradeFiles).then(() => {
             setupSearchFilter('search-trade', 'grid-trade');
         });
