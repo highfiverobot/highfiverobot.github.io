@@ -1,5 +1,6 @@
 🟡Ampharos
 🟡Arcanine
+🟡Arcanine (Hisuian)
 🟡Aromatisse
 🟡Audino
 🟡Bellsprout
@@ -7,7 +8,6 @@
 🟡Clawitzer
 🟡Cutiefly
 🟡Delibird
-🟡Hisuian Arcanine
 🟡Hitmonlee
 🟡Lickitung
 🟡Lilligant

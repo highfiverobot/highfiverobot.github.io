@@ -1,9 +1,7 @@
 🟢Abra
 🟢Aipom
 🟢Alolan
-🟢Meowth
-🟢Alolan Rattata
-🟢Alolan Sandshrew
+🟢Alolan 
 🟢Beldum
 🟢Bagon
 🟢Bidoof
@@ -35,13 +33,11 @@
 🟢Fomantis
 🟢Fuecoco
 🟢Furfrou
-🟢Galarian Zigzagoon
 🟢Golett
 🟢Gothita
 🟢Grimer
 🟢Grubbin
 🟢Gulpin
-🟢Hisuian Voltorb
 🟢Hoppip
 🟢Houndour
 🟢Huntail
@@ -59,6 +55,7 @@
 🟢Mawile
 🟢Meditite
 🟢Meowth
+🟢Meowth (Hisuian)
 🟢Morelull
 🟢Munna
 🟢Oddish
@@ -72,8 +69,10 @@
 🟢Quaxly
 🟢Qwilfish
 🟢Ralts
+🟢Rattata  (Alolan)
 🟢Remoraid
 🟢Rookidee
+🟢Sandshrew (Alolan)
 🟢Scizor
 🟢Scyther
 🟢Seel
@@ -98,7 +97,9 @@
 🟢Vaporeon
 🟢Venonat
 🟢Voltorb
+🟢Voltorb (Hisuian)
 🟢Wimpod
 🟢Wooloo
 🟢Wormadam
 🟢Wurmple
+🟢Zigzagoon (Galarian)

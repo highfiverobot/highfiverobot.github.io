@@ -1,10 +1,10 @@
 🔴Absol
 🔴Aron
+🔴Articuno (Galarian)
 🔴Axew
 🔴Barboach
 🔴Bellsprout
 🔴Blacephalon
-🔴Bloodmoon Ursaluna
 🔴Chimecho
 🔴Clefairy
 🔴Crabrawler
@@ -17,7 +17,6 @@
 🔴Finneon
 🔴Fomantis
 🔴Froakie
-🔴Galarian Articuno
 🔴Gastly
 🔴Gastrodon
 🔴Glameow
@@ -39,7 +38,6 @@
 🔴Machamp (Gigantamax)
 🔴Makuhita
 🔴Mareanie
-🔴Meowth (other)
 🔴Milotic
 🔴Minccino
 🔴Natu
