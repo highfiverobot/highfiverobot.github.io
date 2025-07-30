@@ -27,3 +27,5 @@ make spreadsheet of all pokemon
 columns
 
 link steal or deal
+
+make meta text show most desirable for trade
