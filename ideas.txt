@@ -31,3 +31,5 @@ link steal or deal
 make meta text show most desirable for trade
 
 add a guide for trade colors 
+
+widget for ics events
