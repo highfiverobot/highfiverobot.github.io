@@ -137,16 +137,16 @@
         }
 
         /* Styles for various lists */
-        .links-list, .ideas-list, .challenges-list {
+        .links-list, .ideas-list, .challenges-list, .trade-guide {
             list-style: none;
             padding: 0;
             text-align: left;
         }
-        .links-list li, .ideas-list li, .challenges-list li {
+        .links-list li, .ideas-list li, .challenges-list li, .trade-guide li {
             padding: 8px 0;
             border-bottom: 1px solid #333;
         }
-        .links-list li:last-child, .ideas-list li:last-child, .challenges-list li:last-child {
+        .links-list li:last-child, .ideas-list li:last-child, .challenges-list li:last-child, .trade-guide li:last-child {
             border-bottom: none;
         }
         .links-list a, .ideas-list a {
@@ -204,6 +204,13 @@
             font-size: 14px;
             box-sizing: border-box;
         }
+        .trade-guide {
+            margin-bottom: 1rem;
+            font-size: 14px;
+        }
+        .trade-guide li {
+            padding: 4px 0;
+        }
     </style>
 </head>
 <body>
@@ -213,7 +220,7 @@
         <!-- Left Column -->
         <div id="left-column" class="column">
             <div class="container data-section">
-                <h2 id="title-want" class="grid-title">✨wanted✨</h2>
+                <h2 id="title-want" class="grid-title">wanted</h2>
                 <div id="content-want" class="collapsible-content collapsed">
                     <input type="text" id="search-want" class="search-input" placeholder="enter a pokemon...">
                     <div id="grid-want" class="grid-container">
@@ -222,8 +229,13 @@
                 </div>
             </div>
             <div class="container data-section">
-                <h2 id="title-trade" class="grid-title">✨available✨</h2>
+                <h2 id="title-trade" class="grid-title">available</h2>
                 <div id="content-trade" class="collapsible-content collapsed">
+                    <ul class="trade-guide">
+                        <li>🟢 easy to trade away</li>
+                        <li>🟡 i kind of like it, but it can go</li>
+                        <li>🔴 need something pretty good in return</li>
+                    </ul>
                     <input type="text" id="search-trade" class="search-input" placeholder="enter a pokemon...">
                     <div id="grid-trade" class="grid-container">
                         <p>Loading...</p>
@@ -231,7 +243,7 @@
                 </div>
             </div>
             <div class="container">
-                <h2>🧑‍🤝‍🧑friends🧑‍🤝‍🧑</h2>
+                <h2>friends</h2>
                 <div id="friends-list">
                     <!-- Friend items will be dynamically inserted here -->
                 </div>
@@ -242,7 +254,7 @@
         <div id="center-column" class="column">
             <!-- NEW: Challenges Section -->
             <div class="container">
-                <h2 id="title-challenges" class="grid-title">🏆challenges🏆</h2>
+                <h2 id="title-challenges" class="grid-title">challenges</h2>
                 <div id="challenges-content" class="collapsible-content collapsed">
                     <h3>level 46</h3>
                     <ul class="challenges-list">
@@ -292,7 +304,7 @@
             </div>
             
             <div class="container">
-                <h2>🧑‍💻links🧑‍💻</h2>
+                <h2>links</h2>
                 <ul class="links-list">
                     <li><a href="https://open-web-calendar.hosted.quelltext.eu/calendar.html?url=https%3A%2F%2Fgithub.com%2Fothyn%2Fgo-calendar%2Freleases%2Flatest%2Fdownload%2Fgocal.ics" target="_blank" rel="noopener noreferrer">events</a></li>
                     <li><a href="http://dialgadex.com" target="_blank" rel="noopener noreferrer">dialgadex</a></li>
@@ -304,6 +316,7 @@
                     <li><a href="https://www.pokebattler.com/raids" target="_blank" rel="noopener noreferrer">pokebattler</a></li>
                     <li><a href="https://pokemon.gameinfo.io" target="_blank" rel="noopener noreferrer">gameinfo</a></li>
                     <li><a href="https://iv4u.lima-city.de/" target="_blank" rel="noopener noreferrer">iv4u</a></li>
+                    <li><a href="https://pokestealordeal.com/" target="_blank" rel="noopener noreferrer">poke steal or deal</a></li>
                     <li><a href="https://docs.google.com/spreadsheets/d/12AUOOrRzOwOy6WP-OIyMCo5pDNQW3MksfXL5pMDIp1c/edit#gid=849875596" target="_blank" rel="noopener noreferrer">gdocs</a></li>
                 </ul>
             </div>
@@ -312,14 +325,14 @@
         <!-- Right Column -->
         <div id="right-column" class="column">
             <div class="container">
-                <h2 id="title-search" class="grid-title">🔍strings🔍</h2>
+                <h2 id="title-search" class="grid-title">strings</h2>
                 <div id="search-strings-list" class="collapsible-content collapsed">
                     <!-- Search string items will be dynamically inserted here -->
                 </div>
             </div>
             
             <div class="container">
-                <h2 id="title-types" class="grid-title">🌿types🔥</h2>
+                <h2 id="title-types" class="grid-title">types</h2>
                 <div id="types-content" class="collapsible-content collapsed">
                     <ul class="types-list">
                         <li>fire, flying, rock > <strong>bug</strong> > grass, psychic, dark</li>
@@ -345,7 +358,7 @@
 
             <!-- Ideas Section -->
             <div class="container">
-                <h2 id="title-ideas" class="grid-title">💡ideas💡</h2>
+                <h2 id="title-ideas" class="grid-title">ideas</h2>
                 <div id="ideas-content" class="collapsible-content collapsed">
                     <p>Loading...</p>
                 </div>
