@@ -18,6 +18,3 @@
 nwr["natural"="beach"]({{bbox}});
 // print results
 out geom;
-=======
-
-
