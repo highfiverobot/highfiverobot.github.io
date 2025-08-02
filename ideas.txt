@@ -12,3 +12,12 @@
 * make meta text show most desirable for trade
 * widget for ics events
 * https://pokego.me/team-rocket-coordinates
+* https://overpass-turbo.eu/
+
+// gather results
+nwr["natural"="beach"]({{bbox}});
+// print results
+out geom;
+=======
+
+
