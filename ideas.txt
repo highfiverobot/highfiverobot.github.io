@@ -11,3 +11,4 @@
 * rearrange columns
 * make meta text show most desirable for trade
 * widget for ics events
+* https://pokego.me/team-rocket-coordinates
