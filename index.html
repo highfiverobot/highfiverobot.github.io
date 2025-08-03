@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>highfiveGObot</title>
+    <!-- ICAL.js library for parsing .ics files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ical.js/1.5.0/ical.min.js"></script>
     <style>
         /* --- UPDATED: OLED Dark Mode Theme --- */
         body {
@@ -137,16 +139,16 @@
         }
 
         /* Styles for various lists */
-        .links-list, .ideas-list, .challenges-list, .trade-guide {
+        .links-list, .ideas-list, .challenges-list, .trade-guide, .calendar-list {
             list-style: none;
             padding: 0;
             text-align: left;
         }
-        .links-list li, .ideas-list li, .challenges-list li, .trade-guide li {
+        .links-list li, .ideas-list li, .challenges-list li, .trade-guide li, .calendar-list li {
             padding: 8px 0;
             border-bottom: 1px solid #333;
         }
-        .links-list li:last-child, .ideas-list li:last-child, .challenges-list li:last-child, .trade-guide li:last-child {
+        .links-list li:last-child, .ideas-list li:last-child, .challenges-list li:last-child, .trade-guide li:last-child, .calendar-list li:last-child {
             border-bottom: none;
         }
         .links-list a, .ideas-list a {
@@ -224,6 +226,28 @@
         .sub-title {
             font-size: 1.1rem !important;
         }
+        
+        /* --- UPDATED: Styles for Calendar --- */
+        .event-date {
+            font-weight: bold;
+            color: #8ab4f8;
+        }
+        .event-summary {
+            margin-left: 10px;
+        }
+        .calendar-list a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            padding: 8px 0;
+        }
+        .calendar-list li {
+            padding: 0; /* Padding is now on the anchor tag */
+        }
+        .calendar-list li:has(a):hover {
+            background-color: #2a2a2a;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -233,11 +257,9 @@
 
         <!-- Left Column -->
         <div id="left-column" class="column">
-            <!-- NEW: Parent container for trading -->
             <div class="container data-section">
                 <h2 id="title-trading" class="grid-title">trading</h2>
                 <div id="content-trading" class="collapsible-content collapsed">
-                    <!-- Sub-section for wanted -->
                     <div class="sub-container">
                         <h3 id="title-want" class="grid-title sub-title">wanted</h3>
                         <div id="content-want" class="collapsible-content collapsed">
@@ -247,7 +269,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Sub-section for available -->
                     <div class="sub-container">
                         <h3 id="title-trade" class="grid-title sub-title">available</h3>
                         <div id="content-trade" class="collapsible-content collapsed">
@@ -270,11 +291,56 @@
                     <!-- Friend items will be dynamically inserted here -->
                 </div>
             </div>
+            <div class="container">
+                <h2 id="title-search" class="grid-title">strings</h2>
+                <div id="search-strings-list" class="collapsible-content collapsed">
+                    <!-- Search string items will be dynamically inserted here -->
+                </div>
+            </div>
         </div>
 
         <!-- Center Column -->
         <div id="center-column" class="column">
-            <!-- NEW: Challenges Section -->
+            <div class="container">
+                <h2>events</h2>
+                <div id="calendar-content">
+                    <p>Loading events...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div id="right-column" class="column">
+            <div class="container">
+                <h2 id="title-ideas" class="grid-title">ideas</h2>
+                <div id="ideas-content" class="collapsible-content collapsed">
+                    <p>Loading...</p>
+                </div>
+            </div>
+            <div class="container">
+                <h2 id="title-types" class="grid-title">types</h2>
+                <div id="types-content" class="collapsible-content collapsed">
+                    <ul class="types-list">
+                        <li>fire, flying, rock > <strong>bug</strong> > grass, psychic, dark</li>
+                        <li>bug, fairy, fighting > <strong>dark</strong> > ghost, psychic</li>
+                        <li>dragon, fairy, ice > <strong>dragon</strong> > dragon</li>
+                        <li>ground > <strong>electric</strong> > flying, water</li>
+                        <li>fairy, flying, psychic > <strong>fighting</strong> > dark, ice, normal, rock, steel</li>
+                        <li>ground, rock, water > <strong>fire</strong> > bug, grass, ice, steel</li>
+                        <li>electric, ice, rock > <strong>flying</strong> > bug, fighting, grass</li>
+                        <li>dark, ghost > <strong>ghost</strong> > ghost, psychic</li>
+                        <li>bug, fire, flying, ice, poison > <strong>grass</strong> > ground, rock, water</li>
+                        <li>grass, ice, water > <strong>ground</strong> > electric, fire, poison, rock, steel</li>
+                        <li>fighting, fire, rock, steel > <strong>ice</strong> > dragon, flying, grass, ground</li>
+                        <li>fighting > <strong>normal</strong> > —</li>
+                        <li>ground, psychic > <strong>poison</strong> > fairy, grass</li>
+                        <li>bug, dark, ghost > <strong>psychic</strong> > fighting, poison</li>
+                        <li>fighting, grass, ground, steel, water > <strong>rock</strong> > bug, fire, flying, ice</li>
+                        <li>fighting, fire, ground > <strong>steel</strong> > fairy, ice, rock</li>
+                        <li>electric, grass > <strong>water</strong> > fire, ground, rock</li>
+                    </ul>
+                </div>
+            </div>
             <div class="container">
                 <h2 id="title-challenges" class="grid-title">challenges</h2>
                 <div id="challenges-content" class="collapsible-content collapsed">
@@ -322,67 +388,6 @@
                         <li>defeat a go rocket leader with pokémon ≤2,500 cp</li>
                         <li>achieve rank 10 in the go battle league</li>
                     </ul>
-                </div>
-            </div>
-            
-            <div class="container">
-                <h2>links</h2>
-                <ul class="links-list">
-                    <li><a href="https://open-web-calendar.hosted.quelltext.eu/calendar.html?url=https%3A%2F%2Fgithub.com%2Fothyn%2Fgo-calendar%2Freleases%2Flatest%2Fdownload%2Fgocal.ics" target="_blank" rel="noopener noreferrer">events</a></li>
-                    <li><a href="http://dialgadex.com" target="_blank" rel="noopener noreferrer">dialgadex</a></li>
-                    <li><a href="https://pogostring.com/" target="_blank" rel="noopener noreferrer">pogostring</a></li>
-                    <li><a href="https://leekduck.com/" target="_blank" rel="noopener noreferrer">leekduck</a></li>
-                    <li><a href="https://pokemongohub.net/post/event/pokemon-go-july-2025-events/" target="_blank" rel="noopener noreferrer">go hub</a></li>
-                    <li><a href="https://leidwesen.github.io/SearchPhrases/" target="_blank" rel="noopener noreferrer">leidwesen</a></li>
-                    <li><a href="https://pvpoke.com/" target="_blank" rel="noopener noreferrer">pvpoke</a></li>
-                    <li><a href="https://www.pokebattler.com/raids" target="_blank" rel="noopener noreferrer">pokebattler</a></li>
-                    <li><a href="https://pokemon.gameinfo.io" target="_blank" rel="noopener noreferrer">gameinfo</a></li>
-                    <li><a href="https://iv4u.lima-city.de/" target="_blank" rel="noopener noreferrer">iv4u</a></li>
-                    <li><a href="https://pokestealordeal.com/" target="_blank" rel="noopener noreferrer">poke steal or deal</a></li>
-                    <li><a href="https://docs.google.com/spreadsheets/d/12AUOOrRzOwOy6WP-OIyMCo5pDNQW3MksfXL5pMDIp1c/edit#gid=849875596" target="_blank" rel="noopener noreferrer">gdocs</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Right Column -->
-        <div id="right-column" class="column">
-            <div class="container">
-                <h2 id="title-search" class="grid-title">strings</h2>
-                <div id="search-strings-list" class="collapsible-content collapsed">
-                    <!-- Search string items will be dynamically inserted here -->
-                </div>
-            </div>
-            
-            <div class="container">
-                <h2 id="title-types" class="grid-title">types</h2>
-                <div id="types-content" class="collapsible-content collapsed">
-                    <ul class="types-list">
-                        <li>fire, flying, rock > <strong>bug</strong> > grass, psychic, dark</li>
-                        <li>bug, fairy, fighting > <strong>dark</strong> > ghost, psychic</li>
-                        <li>dragon, fairy, ice > <strong>dragon</strong> > dragon</li>
-                        <li>ground > <strong>electric</strong> > flying, water</li>
-                        <li>fairy, flying, psychic > <strong>fighting</strong> > dark, ice, normal, rock, steel</li>
-                        <li>ground, rock, water > <strong>fire</strong> > bug, grass, ice, steel</li>
-                        <li>electric, ice, rock > <strong>flying</strong> > bug, fighting, grass</li>
-                        <li>dark, ghost > <strong>ghost</strong> > ghost, psychic</li>
-                        <li>bug, fire, flying, ice, poison > <strong>grass</strong> > ground, rock, water</li>
-                        <li>grass, ice, water > <strong>ground</strong> > electric, fire, poison, rock, steel</li>
-                        <li>fighting, fire, rock, steel > <strong>ice</strong> > dragon, flying, grass, ground</li>
-                        <li>fighting > <strong>normal</strong> > —</li>
-                        <li>ground, psychic > <strong>poison</strong> > fairy, grass</li>
-                        <li>bug, dark, ghost > <strong>psychic</strong> > fighting, poison</li>
-                        <li>fighting, grass, ground, steel, water > <strong>rock</strong> > bug, fire, flying, ice</li>
-                        <li>fighting, fire, ground > <strong>steel</strong> > fairy, ice, rock</li>
-                        <li>electric, grass > <strong>water</strong> > fire, ground, rock</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Ideas Section -->
-            <div class="container">
-                <h2 id="title-ideas" class="grid-title">ideas</h2>
-                <div id="ideas-content" class="collapsible-content collapsed">
-                    <p>Loading...</p>
                 </div>
             </div>
         </div>
@@ -512,8 +517,78 @@
             });
         }
 
+        // --- NEW: Function to load and display calendar events ---
+        async function loadCalendarEvents(container, icsUrls) {
+            const proxyApiUrl = 'https://corsproxy.io/?';
+            const allUpcomingEvents = [];
+            const blockedPrefixes = ['[S]', '[GP]', '[GBL]']; // Filter list
+            
+            try {
+                const responses = await Promise.all(
+                    icsUrls.map(url => fetch(`${proxyApiUrl}${encodeURIComponent(url)}`))
+                );
+
+                for (const response of responses) {
+                    if (!response.ok) {
+                        console.error(`HTTP error! Status: ${response.status} for ${response.url}`);
+                        continue;
+                    }
+                    const icsData = await response.text();
+                    const jcalData = ICAL.parse(icsData);
+                    const vcalendar = new ICAL.Component(jcalData);
+                    const vevents = vcalendar.getAllSubcomponents('vevent');
+                    const now = new Date();
+
+                    vevents.forEach(vevent => {
+                        const event = new ICAL.Event(vevent);
+                        const endDate = event.endDate.toJSDate();
+                        
+                        // Check if the event is in the future and not in the blocklist
+                        const isBlocked = blockedPrefixes.some(prefix => event.summary.startsWith(prefix));
+                        if (endDate > now && !isBlocked) {
+                            allUpcomingEvents.push({
+                                summary: event.summary,
+                                startDate: event.startDate.toJSDate(),
+                                url: vevent.getFirstPropertyValue('url') // Extract URL
+                            });
+                        }
+                    });
+                }
+
+                allUpcomingEvents.sort((a, b) => a.startDate - b.startDate);
+                // Show the next 8 events
+                const eventsToShow = allUpcomingEvents.slice(0, 8);
+                
+                if (eventsToShow.length === 0) {
+                    container.innerHTML = '<p>No upcoming events found.</p>';
+                    return;
+                }
+
+                let htmlContent = '<ul class="calendar-list">';
+                const options = { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
+
+                eventsToShow.forEach(event => {
+                    const formattedDate = event.startDate.toLocaleString('en-US', options);
+                    const content = `<span class="event-date">${formattedDate}:</span><span class="event-summary">${event.summary}</span>`;
+                    
+                    // If a URL exists and contains 'leekduck', make it a link
+                    if (event.url && event.url.includes('leekduck')) {
+                        htmlContent += `<li><a href="${event.url}" target="_blank" rel="noopener noreferrer">${content}</a></li>`;
+                    } else {
+                        htmlContent += `<li>${content}</li>`;
+                    }
+                });
+                htmlContent += '</ul>';
+                container.innerHTML = htmlContent;
+
+            } catch (error) {
+                console.error('Error loading calendar data:', error);
+                container.innerHTML = `<p style="color: red;">Could not load calendar. The public proxy may need activation. Please visit the proxy's homepage and click the activation button.</p>`;
+            }
+        }
+
         // --- Initialize Left Column Sections ---
-        setupCollapsible('title-trading', 'content-trading'); // New parent collapsible
+        setupCollapsible('title-trading', 'content-trading');
         setupCollapsible('title-want', 'content-want');
         loadDataForGrid(document.getElementById('grid-want'), 'trade_want.txt').then(() => {
             setupSearchFilter('search-want', 'grid-want');
@@ -526,6 +601,11 @@
         });
 
         // --- Initialize Center Column Sections ---
+        const calendarUrls = [
+            'https://github.com/othyn/go-calendar/releases/latest/download/gocal.ics'
+        ];
+        loadCalendarEvents(document.getElementById('calendar-content'), calendarUrls);
+        
         setupCollapsible('title-challenges', 'challenges-content');
         const friendsData = [
             { title: "all", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun,Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" },
