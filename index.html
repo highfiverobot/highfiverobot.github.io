@@ -303,7 +303,6 @@
         <!-- Center Column -->
         <div id="center-column" class="column">
             <div class="container">
-                <h2>events</h2>
                 <div id="calendar-content">
                     <h4>ongoing</h4>
                     <div id="ongoing-events-list"><p>Loading...</p></div>
@@ -595,6 +594,9 @@
                     
                     // Helper function for custom time formatting
                     const formatTime = (date) => {
+                        if (date.getHours() === 0 && date.getMinutes() === 0) {
+                            return "all day";
+                        }
                         let timeString = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
                         return timeString.replace(':00', '').replace(' ', '').toLowerCase();
                     };
