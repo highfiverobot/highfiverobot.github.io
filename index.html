@@ -15,6 +15,7 @@
             color: #e0e0e0; /* Light text */
             padding: 2px; /* Reduced padding */
             font-weight: 100;
+            text-transform: lowercase; /* NEW: Make all text lowercase */
         }
 
         /* --- 3-Column Layout --- */
@@ -304,7 +305,60 @@
             <div class="container">
                 <h2>events</h2>
                 <div id="calendar-content">
-                    <p>Loading events...</p>
+                    <h4>ongoing</h4>
+                    <div id="ongoing-events-list"><p>Loading...</p></div>
+                    <hr>
+                    <h4>upcoming</h4>
+                    <div id="upcoming-events-list"><p>Loading...</p></div>
+                </div>
+            </div>
+            <div class="container">
+                <h2 id="title-challenges" class="grid-title">challenges</h2>
+                <div id="challenges-content" class="collapsible-content collapsed">
+                    <h3>level 46</h3>
+                    <ul class="challenges-list">
+                        <li>xp: 82m total (15.5m for this level)</li>
+                        <li>complete 100 field research tasks</li>
+                        <li>take a snapshot of a pokémon 7 days in a row</li>
+                        <li>make 50 excellent throws</li>
+                        <li>hatch 30 eggs</li>
+                    </ul>
+                    <hr>
+                    <h3>level 47</h3>
+                    <ul class="challenges-list">
+                        <li>xp: 100m total (18m for this level)</li>
+                        <li>win 30 raids using all unique pokémon species</li>
+                        <li>win a 3★ raid with only pokémon ≤1,500 cp</li>
+                        <li>power up 3 pokémon to max cp</li>
+                        <li>earn 20 platinum medals</li>
+                    </ul>
+                    <hr>
+                    <h3>level 48</h3>
+                    <ul class="challenges-list">
+                        <li>xp: 121m total (21m for this level)</li>
+                        <li>receive 10 souvenirs from your buddy</li>
+                        <li>earn 300 hearts with your buddy</li>
+                        <li>walk 200 km with your buddy</li>
+                        <li>walk 25 km in a week, 8 times</li>
+                    </ul>
+                    <hr>
+                    <h3>level 49</h3>
+                    <ul class="challenges-list">
+                        <li>xp: 146m total (25m for this level)</li>
+                        <li>make 10 trades with pokémon caught ≥300 km apart</li>
+                        <li>obtain 50 lucky pokémon in trades</li>
+                        <li>send 500 gifts to friends</li>
+                        <li>earn 35 platinum medals</li>
+                    </ul>
+                    <hr>
+                    <h3>level 50</h3>
+                    <ul class="challenges-list">
+                        <li>xp: 176m total (30m for this level)</li>
+                        <li>make 999 excellent throws</li>
+                        <li>catch a legendary pokémon in your next 5 encounters</li>
+                        <li>defeat a go rocket leader with pokémon ≤2,500 cp</li>
+                        <li>achieve rank 10 in the go battle league</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -357,55 +411,6 @@
                         <li>fighting, grass, ground, steel, water > <strong>rock</strong> > bug, fire, flying, ice</li>
                         <li>fighting, fire, ground > <strong>steel</strong> > fairy, ice, rock</li>
                         <li>electric, grass > <strong>water</strong> > fire, ground, rock</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="container">
-                <h2 id="title-challenges" class="grid-title">challenges</h2>
-                <div id="challenges-content" class="collapsible-content collapsed">
-                    <h3>level 46</h3>
-                    <ul class="challenges-list">
-                        <li>xp: 82m total (15.5m for this level)</li>
-                        <li>complete 100 field research tasks</li>
-                        <li>take a snapshot of a pokémon 7 days in a row</li>
-                        <li>make 50 excellent throws</li>
-                        <li>hatch 30 eggs</li>
-                    </ul>
-                    <hr>
-                    <h3>level 47</h3>
-                    <ul class="challenges-list">
-                        <li>xp: 100m total (18m for this level)</li>
-                        <li>win 30 raids using all unique pokémon species</li>
-                        <li>win a 3★ raid with only pokémon ≤1,500 cp</li>
-                        <li>power up 3 pokémon to max cp</li>
-                        <li>earn 20 platinum medals</li>
-                    </ul>
-                    <hr>
-                    <h3>level 48</h3>
-                    <ul class="challenges-list">
-                        <li>xp: 121m total (21m for this level)</li>
-                        <li>receive 10 souvenirs from your buddy</li>
-                        <li>earn 300 hearts with your buddy</li>
-                        <li>walk 200 km with your buddy</li>
-                        <li>walk 25 km in a week, 8 times</li>
-                    </ul>
-                    <hr>
-                    <h3>level 49</h3>
-                    <ul class="challenges-list">
-                        <li>xp: 146m total (25m for this level)</li>
-                        <li>make 10 trades with pokémon caught ≥300 km apart</li>
-                        <li>obtain 50 lucky pokémon in trades</li>
-                        <li>send 500 gifts to friends</li>
-                        <li>earn 35 platinum medals</li>
-                    </ul>
-                    <hr>
-                    <h3>level 50</h3>
-                    <ul class="challenges-list">
-                        <li>xp: 176m total (30m for this level)</li>
-                        <li>make 999 excellent throws</li>
-                        <li>catch a legendary pokémon in your next 5 encounters</li>
-                        <li>defeat a go rocket leader with pokémon ≤2,500 cp</li>
-                        <li>achieve rank 10 in the go battle league</li>
                     </ul>
                 </div>
             </div>
@@ -536,11 +541,13 @@
             });
         }
 
-        // --- NEW: Function to load and display calendar events ---
-        async function loadCalendarEvents(container, icsUrls) {
+        // --- UPDATED: Function to load and display calendar events ---
+        async function loadCalendarEvents(icsUrls) {
+            const ongoingContainer = document.getElementById('ongoing-events-list');
+            const upcomingContainer = document.getElementById('upcoming-events-list');
             const proxyApiUrl = 'https://corsproxy.io/?';
-            const allUpcomingEvents = [];
-            const blockedPrefixes = ['[S]', '[GP]', '[GBL]']; // Filter list
+            const allEvents = [];
+            const blockedPrefixes = ['[S]', '[GP]', '[GBL]'];
             
             try {
                 const responses = await Promise.all(
@@ -556,53 +563,66 @@
                     const jcalData = ICAL.parse(icsData);
                     const vcalendar = new ICAL.Component(jcalData);
                     const vevents = vcalendar.getAllSubcomponents('vevent');
-                    const now = new Date();
-
+                    
                     vevents.forEach(vevent => {
                         const event = new ICAL.Event(vevent);
-                        const endDate = event.endDate.toJSDate();
-                        
-                        // Check if the event is in the future and not in the blocklist
                         const isBlocked = blockedPrefixes.some(prefix => event.summary.startsWith(prefix));
-                        if (endDate > now && !isBlocked) {
-                            allUpcomingEvents.push({
+                        if (!isBlocked) {
+                            allEvents.push({
                                 summary: event.summary,
                                 startDate: event.startDate.toJSDate(),
-                                url: vevent.getFirstPropertyValue('url') // Extract URL
+                                endDate: event.endDate.toJSDate(),
+                                url: vevent.getFirstPropertyValue('url')
                             });
                         }
                     });
                 }
 
-                allUpcomingEvents.sort((a, b) => a.startDate - b.startDate);
-                // Show the next 8 events
-                const eventsToShow = allUpcomingEvents.slice(0, 8);
-                
-                if (eventsToShow.length === 0) {
-                    container.innerHTML = '<p>No upcoming events found.</p>';
-                    return;
-                }
+                const now = new Date();
+                const ongoingEvents = allEvents.filter(e => e.startDate <= now && e.endDate > now);
+                const upcomingEvents = allEvents.filter(e => e.startDate > now);
 
-                let htmlContent = '<ul class="calendar-list">';
-                const options = { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
+                ongoingEvents.sort((a, b) => a.startDate - b.startDate);
+                upcomingEvents.sort((a, b) => a.startDate - b.startDate);
 
-                eventsToShow.forEach(event => {
-                    const formattedDate = event.startDate.toLocaleString('en-US', options);
-                    const content = `<span class="event-date">${formattedDate}:</span><span class="event-summary">${event.summary}</span>`;
-                    
-                    // If a URL exists and contains 'leekduck', make it a link
-                    if (event.url && event.url.includes('leekduck')) {
-                        htmlContent += `<li><a href="${event.url}" target="_blank" rel="noopener noreferrer">${content}</a></li>`;
-                    } else {
-                        htmlContent += `<li>${content}</li>`;
+                const renderEvents = (container, events, limit) => {
+                    if (events.length === 0) {
+                        container.innerHTML = '<p>No events found.</p>';
+                        return;
                     }
-                });
-                htmlContent += '</ul>';
-                container.innerHTML = htmlContent;
+                    const eventsToShow = limit ? events.slice(0, limit) : events;
+                    let htmlContent = '<ul class="calendar-list">';
+                    
+                    // Helper function for custom time formatting
+                    const formatTime = (date) => {
+                        let timeString = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                        return timeString.replace(':00', '').replace(' ', '').toLowerCase();
+                    };
+
+                    eventsToShow.forEach(event => {
+                        const weekday = event.startDate.toLocaleDateString('en-US', { weekday: 'short' });
+                        const day = event.startDate.getDate();
+                        const time = formatTime(event.startDate);
+                        const formattedDate = `${weekday} ${day} ${time}`;
+                        const content = `<span class="event-date">${formattedDate}:</span><span class="event-summary">${event.summary}</span>`;
+                        
+                        if (event.url && event.url.includes('leekduck')) {
+                            htmlContent += `<li><a href="${event.url}" target="_blank" rel="noopener noreferrer">${content}</a></li>`;
+                        } else {
+                            htmlContent += `<li>${content}</li>`;
+                        }
+                    });
+                    htmlContent += '</ul>';
+                    container.innerHTML = htmlContent;
+                };
+
+                renderEvents(ongoingContainer, ongoingEvents);
+                renderEvents(upcomingContainer, upcomingEvents, 8);
 
             } catch (error) {
                 console.error('Error loading calendar data:', error);
-                container.innerHTML = `<p style="color: red;">Could not load calendar. The public proxy may need activation. Please visit the proxy's homepage and click the activation button.</p>`;
+                ongoingContainer.innerHTML = `<p style="color: red;">Could not load calendar events.</p>`;
+                upcomingContainer.innerHTML = '';
             }
         }
 
@@ -623,17 +643,18 @@
         const calendarUrls = [
             'https://github.com/othyn/go-calendar/releases/latest/download/gocal.ics'
         ];
-        loadCalendarEvents(document.getElementById('calendar-content'), calendarUrls);
+        loadCalendarEvents(calendarUrls);
         
         setupCollapsible('title-challenges', 'challenges-content');
         const friendsData = [
             { title: "all", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun,Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" },
-            { title: "send", value: "DianthusPhlox,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun" },
+            { title: "send", value: "DianthusPhlo,QueenPenelopeJ3,ParkinTsun,RJR801,Duraid77,TifaZhou,Sfturtle,jeromeT,kb69lcs,Hoully1988,Carlos23AVD,MozMom,Turtleboy,SlanginPuun" },
             { title: "open", value: "Yosemit3Sam,VoonieJasper,Pepperbrownie14,Loudog75,QueenZelina,GreatTrashPanda,ToxicN0x,Schnee13,Wildcats,3NoTrump,Michele812b4u,Mishydee531,Isabella1665,LMeiDay,Gretchen6744,TherapyAnyone" }
         ];
         populateCopyableList(document.getElementById('friends-list'), friendsData);
 
         // --- Initialize Right Column Sections ---
+        setupCollapsible('title-links', 'links-content');
         const searchStringsData = [
             { title: "new", value: "shiny,4*,shadow,maxmove1-&!#max&!#shadhigh&!favorite&!trade&!#2x&!#later&!#misc" },
             { title: "clean", value: "#2x&!trade&!#later&!dynamax&!gigantamax&!shadow&!4*&!shiny&!#misc&!favorite" },
